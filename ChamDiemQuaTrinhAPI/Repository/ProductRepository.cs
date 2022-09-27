@@ -1,7 +1,6 @@
-﻿using ChamDiemQuaTrinhAPI.Context;
-using ChamDiemQuaTrinhAPI.Paging;
-using ChamDiemQuaTrinhAPI.Repository;
-using ChamDiemQuaTrinhAPI.Repository.RepositoryExtensions;
+﻿using ChamDiemQuaTrinh.Context;
+using ChamDiemQuaTrinh.Paging;
+using ChamDiemQuaTrinh.Repository.RepositoryExtensions;
 using Entities.Models;
 using Entities.RequestParameters;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChamDiemQuaTrinhAPI.Repository
+namespace ChamDiemQuaTrinh.Repository
 {
     public class ProductRepository : IProductRepository
     {

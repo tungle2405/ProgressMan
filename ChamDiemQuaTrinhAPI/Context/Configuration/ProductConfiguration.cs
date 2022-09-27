@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChamDiemQuaTrinhAPI.Context.Configuration
+namespace ChamDiemQuaTrinh.Context.Configuration
 {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {

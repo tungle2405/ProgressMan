@@ -1,4 +1,4 @@
-﻿using ChamDiemQuaTrinhAPI.Context.Configuration;
+﻿using ChamDiemQuaTrinh.Context.Configuration;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ChamDiemQuaTrinhAPI.Context
+namespace ChamDiemQuaTrinh.Context
 {
     public class ProductContext : IdentityDbContext<IdentityUser>
     {

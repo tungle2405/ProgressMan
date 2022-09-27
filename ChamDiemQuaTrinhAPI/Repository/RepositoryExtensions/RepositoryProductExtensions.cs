@@ -7,7 +7,7 @@ using System.Text;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
-namespace ChamDiemQuaTrinhAPI.Repository.RepositoryExtensions
+namespace ChamDiemQuaTrinh.Repository.RepositoryExtensions
 {
     public static class RepositoryProductExtensions
     {

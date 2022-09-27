@@ -1,10 +1,10 @@
-﻿using ChamDiemQuaTrinhAPI.Context;
+﻿using ChamDiemQuaTrinh.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace ChamDiemQuaTrinhAPI.MigrationManager
+namespace ChamDiemQuaTrinh.MigrationManager
 {
     public static class MigrationManager
     {

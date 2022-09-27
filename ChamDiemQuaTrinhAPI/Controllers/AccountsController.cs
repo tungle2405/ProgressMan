@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BlazorProducts.Server.Controllers
+namespace ChamDiemQuaTrinh.Controllers
 {
     [Route("api/accounts")]
     [ApiController]

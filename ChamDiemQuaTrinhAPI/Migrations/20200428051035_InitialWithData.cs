@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ChamDiemQuaTrinhAPI.Migrations
+namespace ChamDiemQuaTrinh.Migrations
 {
     public partial class InitialWithData : Migration
     {

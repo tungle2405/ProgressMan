@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ChamDiemQuaTrinhAPI.Repository;
+using ChamDiemQuaTrinh.Repository;
 using Entities.Models;
 using Entities.RequestParameters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace BlazorProducts.Server.Controllers
+namespace ChamDiemQuaTrinh.Controllers
 {
     [Route("api/products")]
     [ApiController]

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChamDiemQuaTrinhAPI.Paging
+namespace ChamDiemQuaTrinh.Paging
 {
     public class PagedList<T> : List<T>
     {

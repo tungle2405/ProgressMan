@@ -1,10 +1,10 @@
-﻿using ChamDiemQuaTrinhAPI.Paging;
+﻿using ChamDiemQuaTrinh.Paging;
 using Entities.Models;
 using Entities.RequestParameters;
 using System;
 using System.Threading.Tasks;
 
-namespace ChamDiemQuaTrinhAPI.Repository
+namespace ChamDiemQuaTrinh.Repository
 {
     public interface IProductRepository
     {

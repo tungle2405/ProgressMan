@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlazorProducts.Server.Controllers
+namespace ChamDiemQuaTrinh.Controllers
 {
     [Route("api/upload")]
     [ApiController]
