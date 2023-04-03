@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/PMStudent/PMStudentApi/obj/Release/net6.0
+/PMStudent/PMStudent/obj/Release/net6.0
+/PMStudent/PMLecture/obj/Release/net6.0
+/.vs/slnx.sqlite
