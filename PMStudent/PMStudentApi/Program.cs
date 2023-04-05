@@ -22,4 +22,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapControllerRoute("login", "PMStudentAPI/{controller}/{action}/{id?}");
+
 app.Run();

@@ -3,6 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,8 +22,17 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}/{id?}");
+
+//app.MapControllerRoute("Login", "PMStudent/{controller}/{action}/{id?}",
+//        defaults: new { area = "LoginSV" }, constraints: new { area = "LoginSV" });
+
+
+
+app.UseEndpoints(endpoints => endpoints.MapControllers());
 
 app.Run();

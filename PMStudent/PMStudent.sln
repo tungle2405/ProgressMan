@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMStudent", "PMStudent\PMStudent.csproj", "{12DAFAD2-AFBA-4084-A655-BFE980584FBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMStudent", "PMStudent\PMStudent.csproj", "{12DAFAD2-AFBA-4084-A655-BFE980584FBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMStudentApi", "PMStudentApi\PMStudentApi.csproj", "{0DD35737-26FC-401E-9D60-3BFA88521B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMStudentApi", "PMStudentApi\PMStudentApi.csproj", "{0DD35737-26FC-401E-9D60-3BFA88521B98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMLecture", "PMLecture\PMLecture.csproj", "{B0CCC110-8786-4C14-AF42-17677D179F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMLecture", "PMLecture\PMLecture.csproj", "{B0CCC110-8786-4C14-AF42-17677D179F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLib", "CoreLib\CoreLib.csproj", "{E4404720-CE31-41C2-B4AA-8D3CBA601250}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B0CCC110-8786-4C14-AF42-17677D179F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0CCC110-8786-4C14-AF42-17677D179F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0CCC110-8786-4C14-AF42-17677D179F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4404720-CE31-41C2-B4AA-8D3CBA601250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4404720-CE31-41C2-B4AA-8D3CBA601250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4404720-CE31-41C2-B4AA-8D3CBA601250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4404720-CE31-41C2-B4AA-8D3CBA601250}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
