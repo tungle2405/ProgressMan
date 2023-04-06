@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace PMStudentApi.Context
 {
-    public class Login : ILogin
+    public class LoginApiContext : ILogin
     {
         //string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
         /// <summary>

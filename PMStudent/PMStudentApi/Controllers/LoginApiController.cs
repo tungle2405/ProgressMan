@@ -39,7 +39,7 @@ namespace PMStudentApi.Controllers
             //CResponeMessage cRespone = new CResponeMessage();
             DBConnection.GetSqlConnection(connectionString); //Mở
 
-            var loginCheck = new Login().CheckLogin(login);
+            var loginCheck = new LoginApiContext().CheckLogin(login);
             var result = JsonConvert.SerializeObject(loginCheck);
 
             DBConnection.GetSqlConnection(connectionString); //Đóng
