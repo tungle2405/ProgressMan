@@ -1,0 +1,13 @@
+﻿body{
+    overflow-x: hidden;
+}
+
+.school-logo{
+    width: 38px;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}

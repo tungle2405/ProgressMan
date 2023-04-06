@@ -15,6 +15,18 @@ namespace PMStudent.Controllers
 
         public IActionResult Index()
         {
+            try
+            {
+                if (HttpContext.Session.GetString("user") == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
 
