@@ -66,13 +66,13 @@ a {
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 16rem;
-    justify-content: space-between;
+    /*width: 16rem;
+    justify-content: space-between;*/
 }
 
-/*.header_info {
-    padding-right: 10px;
-}*/
+.header_info {
+    padding-right: 20px;
+}
 
 .l-navbar {
     position: fixed;
@@ -164,7 +164,8 @@ a {
 
     .header {
         height: calc(var(--header-height) + 1rem);
-        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+        margin-left: 15px;
     }
 
     .header_img {
@@ -186,6 +187,6 @@ a {
     }
 
     .body-pd {
-        padding-left: calc(var(--nav-width) + 188px)
+        padding-left: calc(var(--nav-width) + 155px)
     }
 }

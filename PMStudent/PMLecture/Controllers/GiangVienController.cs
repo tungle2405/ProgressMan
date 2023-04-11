@@ -1,16 +1,14 @@
 ﻿using CoreLib.Common;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using PMLecture.Context;
 using PMLecture.Models;
-using System.Diagnostics;
 
 namespace PMLecture.Controllers
 {
-    public class HomeController : Controller
+    public class GiangVienController : Controller
     {
         private readonly IConfiguration _configuration;
-        public HomeController(IConfiguration Configuration)
+        public GiangVienController(IConfiguration Configuration)
         {
             _configuration = Configuration;
         }
@@ -18,6 +16,8 @@ namespace PMLecture.Controllers
         public IActionResult Index()
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            List<GiangVienViewModel> giangVienInfos = new List<GiangVienViewModel>();
 
             try
             {
@@ -31,8 +31,10 @@ namespace PMLecture.Controllers
                 DBConnection.GetSqlConnection(connectionString); //Mở
 
                 var accInfo = new ThongTinTKContext().GetThongTin(session);
+                giangVienInfos = new GiangVienContext().GetAll();
 
                 ViewBag.AccInfo = accInfo;
+                ViewBag.Side = "GiangVien";
 
                 DBConnection.GetSqlConnection(connectionString); //Đóng
             }
@@ -41,18 +43,14 @@ namespace PMLecture.Controllers
                 return RedirectToAction("Index", "LoginGV");
             }
 
-            return View();
+            return View(giangVienInfos);
+
+            //return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult GetAll()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

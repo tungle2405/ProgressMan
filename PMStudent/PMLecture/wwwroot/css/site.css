@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#example .nav_link {
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+}
+
+#example .nav_link:hover,
+#example .nav_link.active{
+    color: var(--mdb-link-hover-color);
+}
+
+.rounded{
+    border-radius: 1rem !important;
+}

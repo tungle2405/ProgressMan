@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
     var data = ViewBag.AccInfo;
+    var side = ViewBag.Side;
 }
 <!DOCTYPE html>
 <html>
@@ -12,8 +13,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PMStudent</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/PMStudent.styles.css" asp-append-version="true" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -27,7 +28,14 @@
     <!--Bootstraps-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <!--Icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <!--Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <!--Custom CSS-->
+    <link href="~/css/site.css" rel="stylesheet" />
     <link href="~/css/home-sidebar.css" rel="stylesheet" />
 </head>
 <body id="body-pd">
@@ -46,11 +54,30 @@
                     <i class='bx bx-layer nav_logo-icon'></i> 
                     <span class="nav_logo-name">BBBootstrap</span>
                 </a>
-                <div class="nav_list"> 
-                    <a href="#" class="nav_link active"> 
+                <div class="nav_list">
+                    <a href="#" class="nav_link"> 
                         <i class='bx bx-grid-alt nav_icon'></i> 
                         <span class="nav_name">Dashboard</span> 
-                    </a> 
+                    </a>
+                    @if (Convert.ToString(data.MaPhanQuyen) == '0'.ToString())
+                    {
+                        <a href="@Url.Action("Index", "GiangVien")" class="nav_link nav_link_sidebar" id="PDT">
+                            <i class='bx bx-user nav_icon'></i>
+                            <span class="nav_name">Phòng đào tạo</span>
+                        </a>
+                    }
+                    @if (Convert.ToString(data.MaPhanQuyen) == '0'.ToString() || Convert.ToString(data.MaPhanQuyen) == '1'.ToString())
+                    {
+                        <a href="@Url.Action("Index", "GiangVien")" class="nav_link nav_link_sidebar" id="GiangVien">
+                            <i class='bx bx-user nav_icon'></i>
+                            <span class="nav_name">Giảng viên</span>
+                        </a>
+
+                        <a href="@Url.Action("Index", "GiangVien")" class="nav_link nav_link_sidebar" id="SinhVien">
+                            <i class='bx bx-user nav_icon'></i>
+                            <span class="nav_name">Sinh viên</span>
+                        </a>
+                    }
                     <a href="#" class="nav_link"> 
                         <i class='bx bx-user nav_icon'></i> 
                         <span class="nav_name">Users</span> 
@@ -81,65 +108,10 @@
     </div>
     <!--Container Main start-->
     <div class="height-100 bg-light">
-        <h4>Main Components</h4>
+        @*<h4>Main Components</h4>*@
         @RenderBody()
     </div>
     <!--Container Main end-->
-
-@*<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Container wrapper -->
-        <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="https://mdbgo.com/">
-                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="16" alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
-            </a>
-
-            <!-- Toggle button -->
-            <button class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarButtonsExample"
-                    aria-controls="navbarButtonsExample"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                <!-- Left links -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Login", "Index", "LoginGV", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink((string)@data.HoTen, "Index", "LoginGV", null, new { @class = "nav-link" })
-                    </li>
-                </ul>
-                <!-- Left links -->
-
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-link px-3 me-2">
-                        @Html.ActionLink("Logout", "Logout", "LoginGV", null, new { @class = "" })
-                    </button>
-                </div>
-            </div>
-            <!-- Collapsible wrapper -->
-        </div>
-        <!-- Container wrapper -->
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>*@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -149,5 +121,10 @@
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+        var element = document.getElementById("@side");
+        element.classList.add("active");
+    </script>
 </body>
 </html>
