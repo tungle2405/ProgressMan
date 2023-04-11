@@ -29,15 +29,15 @@ namespace PMLecture.Context
 
                 while (reader.Read())
                 {
-                    nhanVien.MaGiangVien = reader["MaGiangVien"].ToString();
-                    nhanVien.HoTen = reader["HoTen"].ToString();
-                    nhanVien.GioiTinh = reader["GioiTinh"].ToString();
-                    nhanVien.TrinhDo = reader["TrinhDo"].ToString();
-                    nhanVien.ChuyenMon = reader["ChuyenMon"].ToString();
-                    nhanVien.MaPhanQuyen = reader["MaPhanQuyen"].ToString();
-                    nhanVien.TenQuyen = reader["TenPhanQuyen"].ToString();
-                    nhanVien.MaDonVi = reader["MaDonVi"].ToString();
-                    nhanVien.TenDonVi = reader["MaGiangVien"].ToString();
+                    nhanVien.MaGiangVien = reader["MaGiangVien"].ToString().Trim();
+                    nhanVien.HoTen = reader["HoTen"].ToString().Trim();
+                    nhanVien.GioiTinh = reader["GioiTinh"].ToString().Trim();
+                    nhanVien.TrinhDo = reader["TrinhDo"].ToString().Trim();
+                    nhanVien.ChuyenMon = reader["ChuyenMon"].ToString().Trim();
+                    nhanVien.MaPhanQuyen = Convert.ToString(reader["MaPhanQuyen"]).Trim();
+                    nhanVien.TenQuyen = reader["TenPhanQuyen"].ToString().Trim();
+                    nhanVien.MaDonVi = reader["MaDonVi"].ToString().Trim();
+                    nhanVien.TenDonVi = reader["MaGiangVien"].ToString().Trim();
                 }
 
                 return nhanVien;
