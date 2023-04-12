@@ -1,14 +1,15 @@
 ﻿using CoreLib.Common;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PMLecture.Context;
 using PMLecture.Models;
 
 namespace PMLecture.Controllers
 {
-    public class GiangVienController : Controller
+    public class PhongDaoTaoController : Controller
     {
         private readonly IConfiguration _configuration;
-        public GiangVienController(IConfiguration Configuration)
+        public PhongDaoTaoController(IConfiguration Configuration)
         {
             _configuration = Configuration;
         }
@@ -21,23 +22,22 @@ namespace PMLecture.Controllers
 
             try
             {
-                if (HttpContext.Session.GetString("user") == null || HttpContext.Session.GetString("user") != "ADMIN"
-                    && HttpContext.Session.GetString("user").Substring(0, 2) != "NV")
+                if (HttpContext.Session.GetString("user") == null || HttpContext.Session.GetString("user") != "ADMIN")
                 {
                     return RedirectToAction("Index", "LoginGV");
                 }
 
                 var session = HttpContext.Session.GetString("user");
 
-                DBConnection.GetSqlConnection(connectionString); //mở
+                DBConnection.GetSqlConnection(connectionString); //Mở
 
-                var accinfo = new ThongTinTKContext().GetThongTin(session);
-                giangVienInfos = new GiangVienContext().GetAllGiangVien();
+                var accInfo = new ThongTinTKContext().GetThongTin(session);
+                giangVienInfos = new GiangVienContext().GetAllPhongDaoTao();
 
-                ViewBag.accinfo = accinfo;
-                ViewBag.side = "GiangVien";
+                ViewBag.AccInfo = accInfo;
+                ViewBag.Side = "PDT";
 
-                DBConnection.GetSqlConnection(connectionString); //đóng
+                DBConnection.GetSqlConnection(connectionString); //Đóng
             }
             catch (Exception ex)
             {
@@ -47,11 +47,6 @@ namespace PMLecture.Controllers
             return View(giangVienInfos);
 
             //return View();
-        }
-
-        public IActionResult GetAll()
-        {
-            return View();
         }
     }
 }

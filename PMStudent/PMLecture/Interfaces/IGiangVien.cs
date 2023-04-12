@@ -5,7 +5,9 @@ namespace PMLecture.Interfaces
 {
     public interface IGiangVien
     {
-        List<GiangVienViewModel> GetAll();
+        List<GiangVienViewModel> GetAllGiangVien();
+
+        List<GiangVienViewModel> GetAllPhongDaoTao();
 
         GiangVienViewModel GetGiangVien(string maGiangVien);
 
