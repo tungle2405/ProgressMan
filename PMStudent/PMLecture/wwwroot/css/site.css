@@ -31,3 +31,12 @@ body {
 .rounded{
     border-radius: 1rem !important;
 }
+
+.text-right {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+#btn-add {
+    font-size: 14px;
+}

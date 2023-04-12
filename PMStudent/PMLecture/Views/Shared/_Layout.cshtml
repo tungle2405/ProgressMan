@@ -55,13 +55,13 @@
                     <span class="nav_logo-name">BBBootstrap</span>
                 </a>
                 <div class="nav_list">
-                    <a href="#" class="nav_link"> 
+                    @*<a href="#" class="nav_link"> 
                         <i class='bx bx-grid-alt nav_icon'></i> 
                         <span class="nav_name">Dashboard</span> 
-                    </a>
+                    </a>*@
                     @if (Convert.ToString(data.MaPhanQuyen) == '0'.ToString())
                     {
-                        <a href="@Url.Action("Index", "GiangVien")" class="nav_link nav_link_sidebar" id="PDT">
+                        <a href="@Url.Action("Index", "PhongDaoTao")" class="nav_link nav_link_sidebar" id="PDT">
                             <i class='bx bx-user nav_icon'></i>
                             <span class="nav_name">Phòng đào tạo</span>
                         </a>
@@ -73,12 +73,12 @@
                             <span class="nav_name">Giảng viên</span>
                         </a>
 
-                        <a href="@Url.Action("Index", "GiangVien")" class="nav_link nav_link_sidebar" id="SinhVien">
+                        <a href="@Url.Action("Index", "SinhVien")" class="nav_link nav_link_sidebar" id="SinhVien">
                             <i class='bx bx-user nav_icon'></i>
                             <span class="nav_name">Sinh viên</span>
                         </a>
                     }
-                    <a href="#" class="nav_link"> 
+                    @*<a href="#" class="nav_link"> 
                         <i class='bx bx-user nav_icon'></i> 
                         <span class="nav_name">Users</span> 
                     </a> 
@@ -97,7 +97,7 @@
                     <a href="#" class="nav_link"> 
                         <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
                         <span class="nav_name">Stats</span> 
-                    </a> 
+                    </a> *@
                 </div>
             </div> 
             <a href="@Url.Action("Logout", "LoginGV")" class="nav_link">
