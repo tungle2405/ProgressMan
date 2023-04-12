@@ -58,7 +58,7 @@ namespace PMLecture.Controllers
                 crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
                 if (crMess.Code == 0)
                 {
-                    HttpContext.Session.SetString("user", crMess.Data);
+                    HttpContext.Session.SetString("user", crMess.Data.Trim());
                     //Session["user"] = crMess.Data;
                     return Json(contents);
                 }
