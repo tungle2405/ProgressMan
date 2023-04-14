@@ -20,5 +20,7 @@
 
         public string TenQuyen { get; set; }
 
+        public string Email { get; set; }
+
     }
 }

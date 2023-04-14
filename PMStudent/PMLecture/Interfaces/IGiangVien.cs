@@ -11,7 +11,7 @@ namespace PMLecture.Interfaces
 
         GiangVienViewModel GetGiangVien(string maGiangVien);
 
-        CResponseMessage AddGiangVien(GiangVienViewModel giangVien);
+        CResponseMessage InsertNhanVien(GiangVienViewModel giangVien);
 
         CResponseMessage UpdateGiangVien(GiangVienViewModel giangVien);
 

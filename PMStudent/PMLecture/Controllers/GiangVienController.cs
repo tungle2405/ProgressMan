@@ -1,5 +1,7 @@
 ﻿using CoreLib.Common;
+using CoreLib.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PMLecture.Context;
 using PMLecture.Models;
 
@@ -31,9 +33,14 @@ namespace PMLecture.Controllers
 
                 DBConnection.GetSqlConnection(connectionString); //mở
 
+                //Lấy ra thông tin tài khoản
                 var accinfo = new ThongTinTKContext().GetThongTin(session);
+                //Lấy ra các đơn vị để insert
+                var donviInfo = new GiangVienContext().GetDonVi();
+                //Lấy ra tất cả giảng viên
                 giangVienInfos = new GiangVienContext().GetAllGiangVien();
 
+                ViewBag.DonVi = donviInfo;
                 ViewBag.accinfo = accinfo;
                 ViewBag.side = "GiangVien";
 
@@ -47,6 +54,35 @@ namespace PMLecture.Controllers
             return View(giangVienInfos);
 
             //return View();
+        }
+
+        public ActionResult InsertEmployee(GiangVienViewModel phongDaoTao)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new GiangVienContext().InsertNhanVien(phongDaoTao);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public IActionResult GetAll()
