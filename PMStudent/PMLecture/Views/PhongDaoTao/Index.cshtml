@@ -165,7 +165,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="col-md-12 mb-4 pb-1">
 
                                     <div class="form-outline">
@@ -174,7 +174,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div>*@
 
                             <div class="row">
                                 <div class="col-6">
@@ -186,9 +186,10 @@
                                             if (@item.MaDonVi == "PDT")
                                             {
                                                 <option value="@item.MaDonVi" selected>@item.TenDonVi</option>
-                                            }else{
+                                            }
+                                            @*else{
                                                 <option value="@item.MaDonVi">@item.TenDonVi</option>
-                                            }                                            
+                                            } *@                                           
                                         }
                                     </select>
                                     @*<label class="form-label select-label">Đơn vị trực thuộc</label>*@
@@ -199,7 +200,7 @@
 
                                     <select class="select form-control-lg" id="phanQuyen" disabled>
                                         <option value="" disabled>Phân Quyền</option>
-                                        <option value="2">Giảng Viên</option>
+                                        @*<option value="2">Giảng Viên</option>*@
                                         <option value="1" selected>Phòng đào tạo</option>
                                     </select>
                                     @*<label class="form-label select-label">Phân Quyền</label>*@
@@ -233,7 +234,9 @@
 <script>
     $(function () {
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#example').DataTable({
+                order: [[2, 'asc']],
+            });
         });
     });
 
@@ -245,7 +248,7 @@
         var donVi = $('#donVi').find(":selected").val();
         var phanQuyen = $('#phanQuyen').find(":selected").val();
         var trinhDo = $('#trinhDo').find(":selected").val();
-        var email = document.getElementById("emailAddress").value;
+        //var email = document.getElementById("emailAddress").value;
 
         var employee = {
             HoTen: hoTen,
@@ -254,7 +257,7 @@
             ChuyenMon: chuyenMon,
             MaDonVi: donVi,
             MaPhanQuyen: phanQuyen,
-            Email: email
+            //Email: email
         };
         var data = JSON.stringify(employee);
 
