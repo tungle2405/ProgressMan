@@ -173,6 +173,7 @@ namespace PMLecture.Context
                 var lastElem = listNV.Count + 1;
                 var maNhanVien = giangVien.MaDonVi + lastElem.ToString(new string('0', 4));
                 var enPass = new CoreLib.DAL.HashCode().Encrypt(maNhanVien);
+                var mailNV = "phongdaotao" + lastElem.ToString(new string('0', 4)) + "@tlu.edu.vn";
 
                 var sqlcon = DBConnection.GetSqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand("GV_SP_InsertEmployee", sqlcon);
@@ -184,7 +185,7 @@ namespace PMLecture.Context
                 cmd.Parameters.AddWithValue("@ChuyenMon", (object)giangVien.ChuyenMon ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@MaDonVi", giangVien.MaDonVi);
                 cmd.Parameters.AddWithValue("@MaPhanQuyen", giangVien.MaPhanQuyen);
-                cmd.Parameters.AddWithValue("@TaiKhoan", giangVien.Email);
+                cmd.Parameters.AddWithValue("@TaiKhoan", giangVien.MaDonVi == "PDT" ? mailNV : giangVien.Email);
                 cmd.Parameters.AddWithValue("@MatKhau", enPass);
 
                 cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 100);

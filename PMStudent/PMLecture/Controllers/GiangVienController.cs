@@ -24,7 +24,7 @@ namespace PMLecture.Controllers
             try
             {
                 if (HttpContext.Session.GetString("user") == null || HttpContext.Session.GetString("user") != "ADMIN"
-                    && HttpContext.Session.GetString("user").Substring(0, 2) != "NV")
+                    && HttpContext.Session.GetString("user").Substring(0, 3) != "PDT")
                 {
                     return RedirectToAction("Index", "LoginGV");
                 }
