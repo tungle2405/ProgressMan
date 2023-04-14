@@ -180,13 +180,13 @@
                                         <option value="1" disabled>Đơn vị trực thuộc</option>
                                         @foreach (var item in donvi)
                                         {
-                                            if (@item.MaDonVi == "PDT")
+                                            if (@item.MaDonVi != "PDT")
                                             {
-                                                <option value="@item.MaDonVi" hidden disabled>@item.TenDonVi</option>
+                                                <option value="@item.MaDonVi">@item.TenDonVi</option>
                                             }
                                             else
                                             {
-                                                <option value="@item.MaDonVi">@item.TenDonVi</option>
+                                                @*<option value="@item.MaDonVi" hidden disabled>@item.TenDonVi</option>*@
                                             }
                                         }
                                     </select>
@@ -199,7 +199,7 @@
                                     <select class="select form-control-lg" id="phanQuyen" disabled>
                                         <option value="" disabled>Phân Quyền</option>
                                         <option value="2" selected>Giảng Viên</option>
-                                        <option value="1">Phòng đào tạo</option>
+                                        @*<option value="1">Phòng đào tạo</option>*@
                                     </select>
                                     @*<label class="form-label select-label">Phân Quyền</label>*@
 
@@ -232,7 +232,9 @@
 <script>
     $(function () {
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#example').DataTable({
+                order: [[4, 'desc']],
+            });
         });
     });
 
