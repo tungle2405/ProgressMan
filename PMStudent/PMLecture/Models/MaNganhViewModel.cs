@@ -26,8 +26,8 @@ namespace PMLecture.Models
             listMN.Add(new MaNganhViewModel { MaNganh = 106, TenNganh = "Công nghệ thông tin", TenVietTat = "TH" });
             listMN.Add(new MaNganhViewModel { MaNganh = 107, TenNganh = "Hệ thống thông tin", TenVietTat = "HT" });
             listMN.Add(new MaNganhViewModel { MaNganh = 108, TenNganh = "Công nghệ phần mềm", TenVietTat = "PM" });
-            listMN.Add(new MaNganhViewModel { MaNganh = 230, TenNganh = "Kinh tế", TenVietTat = "KT" });
-            listMN.Add(new MaNganhViewModel { MaNganh = 421, TenNganh = "Cơ khí", TenVietTat = "CK" });
+            listMN.Add(new MaNganhViewModel { MaNganh = 111, TenNganh = "Kinh tế", TenVietTat = "KT" });
+            listMN.Add(new MaNganhViewModel { MaNganh = 121, TenNganh = "Cơ khí", TenVietTat = "CK" });
 
             return listMN;
         }
