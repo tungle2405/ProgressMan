@@ -9,7 +9,9 @@ namespace PMLecture.Interfaces
 
         SinhVienViewModel GetSinhVien(string maSinhVien);
 
-        CResponseMessage AddSinhVien(SinhVienViewModel sinhVien);
+        List<string> GetMaSinhVien(string maSinhVien);
+
+        CResponseMessage InsertSinhVien(SinhVienViewModel sinhVien);
 
         CResponseMessage UpdateSinhVien(SinhVienViewModel sinhVien);
 

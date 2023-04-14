@@ -1,6 +1,7 @@
 ﻿@model List<SinhVienViewModel>
 @{
     ViewBag.Title = "SinhVien";
+    var listNganh = ViewBag.Nganhs;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,6 +21,12 @@
     .card-registration .select-arrow {
         top: 13px;
     }
+
+    #submit, #lamMoi,
+    #form_add .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
 </style>
 
 <div class="container py-1">
@@ -29,8 +36,8 @@
                 Thông tin Sinh viên
             </h4>
         </div>
-        <div class="col-lg-6 mx-auto text-right" id="btn-add">
-            <button type="button" class="btn btn-outline-primary">
+        <div class="col-lg-6 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-add">
                 Thêm mới
             </button>
         </div>
@@ -95,64 +102,67 @@
             <div class="col-12 col-lg-9 col-xl-7">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
                         <form>
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="firstName" class="form-control form-control-lg" />
-                                        <label class="form-label" for="firstName">First Name</label>
+                                        <input type="text" id="Name" class="form-control form-control-lg" />
+                                        <label class="form-label" for="Name">Họ Tên</label>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="lastName" class="form-control form-control-lg" />
-                                        <label class="form-label" for="lastName">Last Name</label>
+                                        <input type="text" id="lopNienChe" class="form-control form-control-lg"/>
+                                        <label class="form-label" for="lopNienChe">Lớp niên chế</label>
                                     </div>
 
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6 mb-4 d-flex align-items-center">
+                                @*<div class="col-md-6 mb-4 d-flex align-items-center">
 
-                                    <div class="form-outline datepicker w-100">
-                                        <input type="text" class="form-control form-control-lg" id="birthdayDate" />
-                                        <label for="birthdayDate" class="form-label">Birthday</label>
-                                    </div>
+                                    <select class="select form-control-lg" id="trinhDo">
+                                        <option value="" disabled selected>Trình độ</option>
+                                        <option value="Thạc sĩ">Thạc sĩ</option>
+                                        <option value="Tiến sĩ">Tiến sĩ</option>
+                                        <option value="Đại học">Đại học</option>
+                                        <option value="THPT">Trung học phổ thông</option>
+                                    </select>
 
-                                </div>
-                                <div class="col-md-6 mb-4">
+                                </div>*@
+                                <div class="col-md-12 mb-4">
 
-                                    <h6 class="mb-2 pb-1">Gender: </h6>
-
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                               value="option1" checked />
-                                        <label class="form-check-label" for="femaleGender">Female</label>
-                                    </div>
+                                    <h6 class="mb-2 pb-1">Giới tính: </h6>
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                               value="option2" />
-                                        <label class="form-check-label" for="maleGender">Male</label>
+                                               value="Nam" checked />
+                                        <label class="form-check-label" for="maleGender">Nam</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
+                                               value="Nữ" />
+                                        <label class="form-check-label" for="femaleGender">Nữ</label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                                               value="option3" />
-                                        <label class="form-check-label" for="otherGender">Other</label>
+                                               value="Khác" />
+                                        <label class="form-check-label" for="otherGender">Khác</label>
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-4 pb-2">
+                            @*<div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
 
                                     <div class="form-outline">
                                         <input type="email" id="emailAddress" class="form-control form-control-lg" />
@@ -160,32 +170,49 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-6 mb-4 pb-2">
-
-                                    <div class="form-outline">
-                                        <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
-                                        <label class="form-label" for="phoneNumber">Phone Number</label>
-                                    </div>
-
-                                </div>
-                            </div>
+                            </div>*@
 
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
 
-                                    <select class="select form-control-lg">
-                                        <option value="1" disabled>Choose option</option>
-                                        <option value="2">Subject 1</option>
-                                        <option value="3">Subject 2</option>
-                                        <option value="4">Subject 3</option>
+                                    <select class="select form-control-lg" id="nganh">
+                                        <option value="" selected disabled>Ngành</option>
+                                        @foreach (var item in listNganh)
+                                        {
+                                            <option value="@item.MaNganh">@item.TenNganh</option>
+                                        }
                                     </select>
-                                    <label class="form-label select-label">Choose option</label>
+                                    @*<label class="form-label select-label">Đơn vị trực thuộc</label>*@
+
+                                </div>
+
+                                <div class="col-6">
+
+                                    <select class="select form-control-lg" id="tenVietTat" disabled>
+                                        <option value="" selected disabled></option>
+                                        @foreach (var item in listNganh)
+                                        {
+                                            <option value="@item.MaNganh">@item.TenVietTat</option>
+                                        }
+                                    </select>
+                                    @*<label class="form-label select-label">Phân Quyền</label>*@
 
                                 </div>
                             </div>
 
-                            <div class="mt-4 pt-2">
-                                <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
+                            @*<div class="row">
+
+                            </div>*@
+
+                            <div class="row mt-4 pt-2">
+
+                                <div class="col-6">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submit" />
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="btn btn-secondary btn-sm" type="button" value="Làm mới" id="lamMoi" />
+                                </div>
                             </div>
 
                         </form>
@@ -199,7 +226,91 @@
 <script>
     $(function () {
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#example').DataTable({
+                order: [[2, 'asc']],
+            });
         });
+    });
+
+    $('#submit').on('click', function () {
+
+        var hoTen = document.getElementById("Name").value;
+        var lopNienChe = document.getElementById("lopNienChe").value;
+        var gioiTinh = $('input[name=inlineRadioOptions]:checked', '#form_add').val();
+        var nganh = $('#nganh').find(":selected").val();
+        //var email = document.getElementById("emailAddress").value;
+
+        var student = {
+            HoTen: hoTen,
+            GioiTinh: gioiTinh,
+            LopNienChe: lopNienChe,
+            MaNganh: nganh,
+        };
+        var data = JSON.stringify(student);
+
+        $.ajax({
+            url: '@Url.Action("InsertSinhVien", "SinhVien")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: student,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#Name").val('');
+                $("#lopNienChe").val('');
+                $("#emailAddress").val('');
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                    setTimeout(function () { window.location.href = "SinhVien/Index" }, 2000);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
+
+    //Chuyển ngành thì tự động chuyển tên lớp
+    $("#nganh").change(function () {
+        var se = $(this).prop('selectedIndex');
+        $("#tenVietTat").prop('selectedIndex', se);
+    });
+
+    //Tự động chuyển từ khoá, ngành sang lớp
+    $('#lopNienChe').click(function (event) {
+        var namHienTai = new Date().getFullYear();
+        var namThanhLap = 1959;
+        var khoa = namHienTai - namThanhLap;
+        //var tenVT = $('#tenVietTat').find(":selected").val();
+        var tenVT = $('#tenVietTat').find(":selected")[0].innerText;
+        var tenLop = khoa + tenVT;
+
+        $('#lopNienChe').val(tenLop);
     });
 </script>

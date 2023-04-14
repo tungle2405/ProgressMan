@@ -9,5 +9,9 @@
         public string GioiTinh { get; set; }
 
         public string LopNienChe { get; set; }
+
+        public int MaNganh { get; set; }
+
+        public string Email { get; set; }
     }
 }
