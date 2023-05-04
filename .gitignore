@@ -113,3 +113,8 @@
 /PMStudent/PMLecture/obj/Debug/net6.0/PMLecture.csproj.BuildWithSkipAnalyzers
 /PMStudent/PMLecture/obj/Debug/net6.0/apphost.exe
 /PMStudent/PMStudentApi/obj/Debug/net6.0
+/PMStudent/CoreLib/bin/Debug/CoreLib.pdb
+/PMStudent/CoreLib/bin/Debug/CoreLib.dll
+/PMStudent/CoreLib/obj/Debug/CoreLib.pdb
+/PMStudent/CoreLib/obj/Debug/CoreLib.dll
+/PMStudent/CoreLib/obj/Debug/CoreLib.csproj.CoreCompileInputs.cache
