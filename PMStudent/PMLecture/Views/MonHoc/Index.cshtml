@@ -1,0 +1,260 @@
+﻿@model List<MonHocViewModel>
+@{
+    ViewBag.Title = "MonHoc";
+    //var donvi = ViewBag.DonVi;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submit, #lamMoi,
+    #form_add .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+</style>
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6 mx-auto">
+            <h4>
+                Thông tin môn học
+            </h4>
+        </div>
+        <div class="col-lg-6 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-add">
+                Thêm mới
+            </button>
+        </div>
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên Môn Học</th>
+                                    <th>Tổng số tiết</th>
+                                    <th>Số tiết lý thuyết</th>
+                                    <th>Số tiết thực hành</th>
+                                    <th>Sửa</th>
+                                    <th>Xoá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var monhoc in Model)
+                                    {
+                                        <tr>
+                                            <td>@monhoc.TenMonHoc</td>
+                                            <td>@monhoc.TongSoTiet</td>
+                                            <td>@monhoc.SoTietLyThuyet</td>
+                                            <td>@monhoc.SoTietThucHanh</td>
+                                            <td>
+                                                <a href="#" class="nav_link">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="nav_link">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu giảng viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="vh-100 gradient-custom d-none" id="form_add">
+    <div class="container py-1 h-100">
+        <div class="row justify-content-center align-items-center h-auto">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
+                        <form>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="Name" class="form-control form-control-lg" />
+                                        <label class="form-label" for="Name">Tên môn học</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="SumLesson" class="form-control form-control-lg" />
+                                        <label class="form-label" for="SumLesson">Tổng số tiết</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="email" id="theoryClass" class="form-control form-control-lg" />
+                                        <label class="form-label" for="theoryClass">Số tiết lý thuyết</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="email" id="practicalClass" class="form-control form-control-lg" />
+                                        <label class="form-label" for="practicalClass">Số tiết thực hành</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row mt-4 pt-2">
+
+                                <div class="col-6">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submit" />
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="btn btn-secondary btn-sm" type="button" value="Làm mới" id="lamMoi" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+            });
+        });
+    });
+
+    //$('#submit').on('click', function () {
+
+    //    var hoTen = document.getElementById("Name").value;
+    //    var chuyenMon = document.getElementById("chuyenMon").value;
+    //    var gioiTinh = $('input[name=inlineRadioOptions]:checked', '#form_add').val();
+    //    var donVi = $('#donVi').find(":selected").val();
+    //    var phanQuyen = $('#phanQuyen').find(":selected").val();
+    //    var trinhDo = $('#trinhDo').find(":selected").val();
+    //    var email = document.getElementById("emailAddress").value;
+
+    //    var employee = {
+    //        HoTen: hoTen,
+    //        GioiTinh: gioiTinh,
+    //        TrinhDo: trinhDo,
+    //        ChuyenMon: chuyenMon,
+    //        MaDonVi: donVi,
+    //        MaPhanQuyen: phanQuyen,
+    //        Email: email
+    //    };
+    //    var data = JSON.stringify(employee);
+
+    //    $.ajax({
+    //        url: '@Url.Action("InsertEmployee", "GiangVien")',
+    //        type: "POST",
+    //        dataType: "json",
+    //        //contentType: false,
+    //        data: employee,
+    //        //async: true,
+    //        //processData: false,
+    //        //cache: false,
+    //        success: function (data) {
+    //            $("#Name").val('');
+    //            $("#chuyenMon").val('');
+    //            $("#emailAddress").val('');
+
+    //            $("#form_add").toggleClass("d-none");
+    //            $("#from_search").toggleClass("d-none");
+    //            $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+    //            var obj = JSON.parse(data);
+    //            if (obj.Code == 0) {
+    //                Swal.fire({
+    //                    icon: 'success',
+    //                    title: 'Thành công!',
+    //                    text: obj.Message,
+    //                    timer: 1500
+    //                });
+    //            } else {
+    //                Swal.fire({
+    //                    icon: 'error',
+    //                    title: 'Lỗi!',
+    //                    text: obj.Message,
+    //                    timer: 3000
+    //                })
+    //            }
+    //        },
+    //        error: function (xhr) {
+    //            Swal.fire({
+    //                icon: 'error',
+    //                title: 'Lỗi!',
+    //                text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+    //            })
+    //        }
+    //    });
+
+    //})
+
+    //Tự động chuyển từ họ tên sang email
+    $('#emailAddress').click(function (event) {
+        var hoTen = document.getElementById("Name").value;
+        var words = hoTen.split(' ');
+        var ten = words.pop();
+        var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
+
+        $('#emailAddress').val(emailSplit);
+    });
+</script>

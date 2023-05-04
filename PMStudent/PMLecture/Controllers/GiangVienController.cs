@@ -41,7 +41,7 @@ namespace PMLecture.Controllers
                 giangVienInfos = new GiangVienContext().GetAllGiangVien();
 
                 ViewBag.DonVi = donviInfo;
-                ViewBag.accinfo = accinfo;
+                ViewBag.AccInfo = accinfo;
                 ViewBag.side = "GiangVien";
 
                 DBConnection.GetSqlConnection(connectionString); //đóng
