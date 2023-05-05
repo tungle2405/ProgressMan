@@ -9,6 +9,8 @@ namespace PMLecture.Interfaces
 
         MonHocViewModel GetMonHoc(string maMonHoc);
 
+        List<string> GetMaMonHoc(string maMonHoc);
+
         CResponseMessage InsertMonHoc(MonHocViewModel monHoc);
 
         CResponseMessage UpdateMonHoc(MonHocViewModel monHoc);

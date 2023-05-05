@@ -1,4 +1,6 @@
-﻿namespace PMLecture.Models
+﻿using System.Collections.Generic;
+
+namespace PMLecture.Models
 {
     public class MonHocViewModel
     {

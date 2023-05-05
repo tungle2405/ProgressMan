@@ -1,5 +1,7 @@
 ﻿using CoreLib.Common;
+using CoreLib.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PMLecture.Context;
 using PMLecture.Models;
 
@@ -32,13 +34,14 @@ namespace PMLecture.Controllers
 
                 //Lấy ra thông tin tài khoản
                 var accinfo = new ThongTinTKContext().GetThongTin(session);
-                //Lấy ra các đơn vị để insert
-                //var donviInfo = new GiangVienContext().GetDonVi();
-                //Lấy ra tất cả giảng viên
+                //Lấy ra các mã môn học để insert
+                var listMaMonHoc = new MaNganhViewModel().GetMaMonHoc();
+                //Lấy ra tất cả môn học
                 monHocInfos = new MonHocContext().GetAllMonHoc();
 
                 //ViewBag.DonVi = donviInfo;
                 ViewBag.AccInfo = accinfo;
+                ViewBag.MaMonHocs = listMaMonHoc;
                 ViewBag.Side = "MonHoc";
 
                 DBConnection.GetSqlConnection(connectionString); //đóng
@@ -51,6 +54,35 @@ namespace PMLecture.Controllers
             return View(monHocInfos);
 
             //return View();
+        }
+
+        public ActionResult InsertMonHoc(MonHocViewModel monHoc)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new MonHocContext().InsertMonHoc(monHoc);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

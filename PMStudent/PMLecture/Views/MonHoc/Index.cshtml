@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "MonHoc";
     //var donvi = ViewBag.DonVi;
+    var listMonHoc = ViewBag.MaMonHocs;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,6 +27,10 @@
     #form_add .ripple-surface {
         width: 100%;
         font-size: 18px;
+    }
+
+    #MaMH{
+        line-height: 2rem;
     }
 </style>
 
@@ -106,13 +111,25 @@
                     <div class="card-body p-4 p-md-5">
                         <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
                         <form>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-4">
+                                    <select class="select form-control form-control-md" id="MaMH">
+                                        <option value="" selected disabled>Mã môn học</option>
+                                        @foreach (var item in listMonHoc)
+                                        {
+                                            <option value="@item.TenVietTat">@item.TenNganh</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div class="row">
                                 <div class="col-md-12 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="Name" class="form-control form-control-lg" />
-                                        <label class="form-label" for="Name">Tên môn học</label>
+                                        <input type="text" id="NameLesson" class="form-control form-control-lg" />
+                                        <label class="form-label" for="NameLesson">Tên môn học</label>
                                     </div>
 
                                 </div>
@@ -122,8 +139,8 @@
                                 <div class="col-md-12 mb-4">
 
                                     <div class="form-outline">
-                                        <input type="text" id="SumLesson" class="form-control form-control-lg" />
-                                        <label class="form-label" for="SumLesson">Tổng số tiết</label>
+                                        <input type="text" id="TotalLesson" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TotalLesson">Tổng số tiết</label>
                                     </div>
 
                                 </div>
@@ -133,8 +150,8 @@
                                 <div class="col-md-12 mb-4 pb-1">
 
                                     <div class="form-outline">
-                                        <input type="email" id="theoryClass" class="form-control form-control-lg" />
-                                        <label class="form-label" for="theoryClass">Số tiết lý thuyết</label>
+                                        <input type="email" id="TheoryClass" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TheoryClass">Số tiết lý thuyết</label>
                                     </div>
 
                                 </div>
@@ -144,8 +161,8 @@
                                 <div class="col-md-12 mb-4 pb-1">
 
                                     <div class="form-outline">
-                                        <input type="email" id="practicalClass" class="form-control form-control-lg" />
-                                        <label class="form-label" for="practicalClass">Số tiết thực hành</label>
+                                        <input type="email" id="PracticalClass" class="form-control form-control-lg" />
+                                        <label class="form-label" for="PracticalClass">Số tiết thực hành</label>
                                     </div>
 
                                 </div>
@@ -181,80 +198,77 @@
         });
     });
 
-    //$('#submit').on('click', function () {
+    $('#submit').on('click', function () {
 
-    //    var hoTen = document.getElementById("Name").value;
-    //    var chuyenMon = document.getElementById("chuyenMon").value;
-    //    var gioiTinh = $('input[name=inlineRadioOptions]:checked', '#form_add').val();
-    //    var donVi = $('#donVi').find(":selected").val();
-    //    var phanQuyen = $('#phanQuyen').find(":selected").val();
-    //    var trinhDo = $('#trinhDo').find(":selected").val();
-    //    var email = document.getElementById("emailAddress").value;
+        var maMonHoc = $('#MaMH').find(":selected").val();
+        var tenMonHoc = document.getElementById("NameLesson").value;
+        var tongSoTiet = document.getElementById("TotalLesson").value;
+        var soTietLyThuyet = document.getElementById("TheoryClass").value;
+        var soTietThucHanh = document.getElementById("PracticalClass").value;
 
-    //    var employee = {
-    //        HoTen: hoTen,
-    //        GioiTinh: gioiTinh,
-    //        TrinhDo: trinhDo,
-    //        ChuyenMon: chuyenMon,
-    //        MaDonVi: donVi,
-    //        MaPhanQuyen: phanQuyen,
-    //        Email: email
-    //    };
-    //    var data = JSON.stringify(employee);
+        var subject = {
+            MaMonHoc: maMonHoc,
+            TenMonHoc: tenMonHoc,
+            TongSoTiet: tongSoTiet,
+            SoTietLyThuyet: soTietLyThuyet,
+            SoTietThucHanh: soTietThucHanh
+        };
+        var data = JSON.stringify(subject);
 
-    //    $.ajax({
-    //        url: '@Url.Action("InsertEmployee", "GiangVien")',
-    //        type: "POST",
-    //        dataType: "json",
-    //        //contentType: false,
-    //        data: employee,
-    //        //async: true,
-    //        //processData: false,
-    //        //cache: false,
-    //        success: function (data) {
-    //            $("#Name").val('');
-    //            $("#chuyenMon").val('');
-    //            $("#emailAddress").val('');
+        $.ajax({
+            url: '@Url.Action("InsertMonHoc", "MonHoc")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: subject,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#NameLesson").val('');
+                $("#TotalLesson").val('');
+                $("#TheoryClass").val('');
+                $("#PracticalClass").val('');
 
-    //            $("#form_add").toggleClass("d-none");
-    //            $("#from_search").toggleClass("d-none");
-    //            $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
 
-    //            var obj = JSON.parse(data);
-    //            if (obj.Code == 0) {
-    //                Swal.fire({
-    //                    icon: 'success',
-    //                    title: 'Thành công!',
-    //                    text: obj.Message,
-    //                    timer: 1500
-    //                });
-    //            } else {
-    //                Swal.fire({
-    //                    icon: 'error',
-    //                    title: 'Lỗi!',
-    //                    text: obj.Message,
-    //                    timer: 3000
-    //                })
-    //            }
-    //        },
-    //        error: function (xhr) {
-    //            Swal.fire({
-    //                icon: 'error',
-    //                title: 'Lỗi!',
-    //                text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
-    //            })
-    //        }
-    //    });
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
 
-    //})
+    })
 
     //Tự động chuyển từ họ tên sang email
-    $('#emailAddress').click(function (event) {
-        var hoTen = document.getElementById("Name").value;
-        var words = hoTen.split(' ');
-        var ten = words.pop();
-        var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
+    //$('#emailAddress').click(function (event) {
+    //    var hoTen = document.getElementById("Name").value;
+    //    var words = hoTen.split(' ');
+    //    var ten = words.pop();
+    //    var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
 
-        $('#emailAddress').val(emailSplit);
-    });
+    //    $('#emailAddress').val(emailSplit);
+    //});
 </script>

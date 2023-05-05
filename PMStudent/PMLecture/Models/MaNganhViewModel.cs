@@ -7,12 +7,14 @@ namespace PMLecture.Models
     {
         public int MaNganh { get; set; }
 
-        public string TenNganh { get; set; }
+        public string? TenNganh { get; set; }
 
         public string TenVietTat { get; set; }
 
         public List<MaNganhViewModel> listMN = new List<MaNganhViewModel>();
-        
+
+        public List<MaNganhViewModel> listMMH = new List<MaNganhViewModel>();
+
         public List<MaNganhViewModel> GetMaNganh()
         {
             //List<MaNganhViewModel> listMN = new List<MaNganhViewModel>()
@@ -30,6 +32,24 @@ namespace PMLecture.Models
             listMN.Add(new MaNganhViewModel { MaNganh = 121, TenNganh = "Cơ khí", TenVietTat = "CK" });
 
             return listMN;
+        }
+
+        public List<MaNganhViewModel> GetMaMonHoc()
+        {
+            //Dùng chung cho mã môn học
+            //Mã ngành => Mã định danh môn học
+            //Tên ngành => Tên khoa phụ trách môn học
+            //Tên viết tắt => Mã của khoa phụ trách môn học
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Công nghệ thông tin", TenVietTat = "CSE" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Toán", TenVietTat = "MATH" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Tiếng Anh", TenVietTat = "ENGL" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Chính trị", TenVietTat = "IDEO" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Thể chất", TenVietTat = "TC" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Quân sự", TenVietTat = "GDQP" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Vật lý", TenVietTat = "PHYS" });
+            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Thể chất", TenVietTat = "TC" });
+
+            return listMMH;
         }
     }
 }

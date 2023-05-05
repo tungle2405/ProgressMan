@@ -143,6 +143,10 @@ a {
     color: var(--white-color)
 }
 
+.form-control.active {
+    color: #000;
+}
+
     .active::before {
         content: '';
         position: absolute;
