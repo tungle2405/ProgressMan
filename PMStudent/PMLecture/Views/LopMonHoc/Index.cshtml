@@ -1,0 +1,302 @@
+﻿@model List<LopMonHocViewModel>
+@{
+    ViewBag.Title = "LopMonHoc";
+    //var donvi = ViewBag.DonVi;
+    var listMonHoc = ViewBag.MonHocs;
+    var listGiangVien = ViewBag.GiangViens;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submit, #lamMoi,
+    #form_add .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH{
+        line-height: 2rem;
+    }
+</style>
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6 mx-auto">
+            <h4>
+                Thông tin môn học
+            </h4>
+        </div>
+        <div class="col-lg-6 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-add">
+                Thêm mới
+            </button>
+        </div>
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã Lớp Môn Học</th>
+                                    <th>Tên Lớp Môn Học</th>
+                                    <th>Tên giảng viên</th>
+                                    <th>Học kỳ</th>
+                                    <th>Năm học</th>
+                                    <th>Tổng số sinh viên</th>
+                                    <th>Sửa</th>
+                                    <th>Xoá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var lopmonhoc in Model)
+                                    {
+                                                <tr>
+                                                    <td>@lopmonhoc.MaLopMonHoc</td>
+                                                    <td>@lopmonhoc.TenLopMonHoc</td>
+                                                    <td>@lopmonhoc.TenGiangVien</td>
+                                                    <td>@lopmonhoc.HocKy</td>
+                                                    <td>@lopmonhoc.NamHoc</td>
+                                                    <td>@lopmonhoc.SoSinhVien</td>
+                                                    <td>
+                                                        <a href="#" class="nav_link">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" class="nav_link">
+                                                            <i class="bi bi-trash-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                    }
+                                }
+                                else
+                                {
+                                        <tr>
+                                            <td colspan="6">
+                                                <div>
+                                                    Không có dữ liệu giảng viên
+                                                </div>
+                                            </td>
+                                        </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="vh-100 gradient-custom d-none" id="form_add">
+    <div class="container py-1 h-100">
+        <div class="row justify-content-center align-items-center h-auto">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-4">
+                                    <select class="select form-control form-control-md" id="TenMonHoc">
+                                        <option value="" selected disabled>Môn học</option>
+                                        @foreach (var item in listMonHoc)
+                                        {
+                                                <option value="@item.MaMonHoc">@item.TenMonHoc</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    @*<div class="form-outline">
+                                        <input type="text" id="NameLesson" class="form-control form-control-lg" />
+                                        <label class="form-label" for="NameLesson">Tên môn học</label>
+                                    </div>*@
+                                    <select class="select form-control form-control-md" id="TenGiangVien">
+                                        <option value="" selected disabled>Giảng viên</option>
+                                        @foreach (var item in listGiangVien)
+                                        {
+                                            <option value="@item.MaGiangVien">@item.HoTen</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+                                    <select class="select form-control form-control-md" id="Semester">
+                                        <option value="" selected disabled>Học kỳ</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+
+                                    @*<div class="form-outline">
+                                        <input type="email" id="Semester" class="form-control form-control-lg" />
+                                        <label class="form-label" for="Semester">Học kỳ</label>
+                                    </div>*@
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <select class="select form-control form-control-md" id="SchoolYear">
+                                        @*<option value="" selected disabled>Năm học</option>*@
+                                    </select>
+
+                                    @*<div class="form-outline">
+                                        <input type="email" id="SchoolYear" class="form-control form-control-lg" />
+                                        <label class="form-label" for="SchoolYear">Năm học</label>
+                                    </div>*@
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="TotalStudent" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TotalStudent">Số sinh viên</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row mt-4 pt-2">
+
+                                <div class="col-6">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submit" />
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="btn btn-secondary btn-sm" type="button" value="Làm mới" id="lamMoi" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+            });
+        });
+    });
+
+    $('#submit').on('click', function () {
+
+        var monHoc = $('#TenMonHoc').find(":selected").val();
+        var giangVien = $('#TenGiangVien').find(":selected").val();
+        var hocKy = document.getElementById("Semester").value;
+        var namHoc = $('#SchoolYear').find(":selected").val();
+        var soSinhVien = document.getElementById("TotalStudent").value;
+
+        var classSubject = {
+            MaMonHoc: monHoc,
+            MaGiangVien: giangVien,
+            HocKy: hocKy,
+            NamHoc: namHoc,
+            SoSinhVien: soSinhVien
+        };
+        var data = JSON.stringify(classSubject);
+
+        $.ajax({
+            url: '@Url.Action("InsertLopMonHoc", "LopMonHoc")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: classSubject,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#TotalStudent").val('');
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
+
+    //Tự động chuyển từ họ tên sang email
+    //$('#emailAddress').click(function (event) {
+    //    var hoTen = document.getElementById("Name").value;
+    //    var words = hoTen.split(' ');
+    //    var ten = words.pop();
+    //    var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
+
+    //    $('#emailAddress').val(emailSplit);
+    //});
+
+    //Tự động điền mới năm để phù hợp với từng giai đoạn
+    $('#SchoolYear').each(function () {
+        var year = (new Date()).getFullYear();
+        var current = year;
+        year -= 0;
+        //<option value="" selected disabled > Năm học < /option>
+        $(this).append('<option selected disabled value="">Năm học</option>');
+        for (var i = 0; i < 3; i++) {
+            if ((year+i) == current)
+                $(this).append('<option selected value="' + (year + i) + '">' + (year + i) + '</option>');
+            else
+                $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
+        }
+    })
+</script>

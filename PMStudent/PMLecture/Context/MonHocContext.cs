@@ -126,7 +126,6 @@ namespace PMLecture.Context
                 throw ex;
             }
 
-            throw new NotImplementedException();
         }
 
         public CResponseMessage UpdateMonHoc(MonHocViewModel monHoc)
