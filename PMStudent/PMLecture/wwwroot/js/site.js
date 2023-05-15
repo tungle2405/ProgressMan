@@ -4,10 +4,24 @@
 // Write your JavaScript code.
 //Toggle chuyển nút và ẩn hiện form thêm mới
 const button = document.getElementById("btn-add");
+const buttonClear = document.getElementById("lamMoi");
 button.addEventListener("click", function () {
     $("#form_add").toggleClass("d-none");
     $("#from_search").toggleClass("d-none");
+    $("#insertBTN").toggleClass("d-none");
+    $("#updateBTN").toggleClass("d-none");
     $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+});
+
+//Nút Làm mới
+buttonClear.addEventListener("click", function () {
+    $('input[type=text]').each(function () {
+        $(this).val('');
+    });
+    $('select.cchange option:disabled').prop('selected', true);
+    $("input[type=radio][name=inlineRadioOptions]:first").prop('checked', true);
+    $("#insertBTN").removeClass("d-none");
+    $("#updateBTN").addClass("d-none");
 });
 
 //Convert từ có dấu sang không dấu

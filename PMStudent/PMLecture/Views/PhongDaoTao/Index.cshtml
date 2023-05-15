@@ -22,7 +22,7 @@
         top: 13px;
     }
 
-    #submit, #lamMoi,
+    #submit, #lamMoi, #update,
     #form_add .ripple-surface {
         width: 100%;
         font-size: 18px;
@@ -69,7 +69,7 @@
                                             <td>@nhanvien.TrinhDo</td>
                                             <td>@nhanvien.TenDonVi</td>
                                             <td>
-                                                <a href="#" class="nav_link">
+                                                <a href="#" class="nav_link nav_link-detail" id="@nhanvien.MaGiangVien">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>
@@ -109,6 +109,17 @@
                         <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
                         <form>
 
+                            <div class="row d-none">
+                                <div class="col-md-12 mb-6">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="MaGiangVien" class="form-control form-control-lg" />
+                                        <label class="form-label" for="MaGiangVien">Mã Giảng Viên</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-6 mb-4">
 
@@ -131,7 +142,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
 
-                                    <select class="select form-control-lg" id="trinhDo">
+                                    <select class="select cchange form-control-lg" id="trinhDo">
                                         <option value="" disabled selected>Trình độ</option>
                                         <option value="Thạc sĩ">Thạc sĩ</option>
                                         <option value="Tiến sĩ">Tiến sĩ</option>
@@ -214,8 +225,12 @@
 
                             <div class="row mt-4 pt-2">
 
-                                <div class="col-6">
+                                <div class="col-6" id="insertBTN">
                                     <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submit" />
+                                </div>
+
+                                <div class="col-6 d-none" id="updateBTN">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Update" id="update" />
                                 </div>
 
                                 <div class="col-6">
@@ -240,6 +255,7 @@
         });
     });
 
+    //Insert Giảng Viên hoặc Nhân viên PĐT
     $('#submit').on('click', function () {
 
         var hoTen = document.getElementById("Name").value;
@@ -306,4 +322,45 @@
         });
 
     })
+
+    //Get Giảng Viên hoặc Nhân viên PĐT
+    $('.nav_link-detail').on('click', function () {
+        var idEmp = $(this)[0].id;
+        console.log(example);
+
+        $.ajax({
+            url: '@Url.Action("GetEmployee", "PhongDaoTao")',
+            type: "GET",
+            dataType: "json",
+            //contentType: false,
+            data: { MaGiangVien: idEmp },
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                var $radios = $('input:radio[name=gender]');
+
+                document.getElementById('MaGiangVien').value = idEmp;
+                $("#Name").val(obj.HoTen);
+                $("#chuyenMon").val(obj.ChuyenMon);
+                $('input:radio[name="inlineRadioOptions"]').filter('[value="' + obj.GioiTinh + '"]').attr('checked', true);
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                document.getElementById('btn-add').textContent = "Quay lại";
+
+                $("#insertBTN").toggleClass("d-none");
+                $("#updateBTN").toggleClass("d-none");
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+    })
+
 </script>

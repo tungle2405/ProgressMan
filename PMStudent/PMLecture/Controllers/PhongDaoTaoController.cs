@@ -84,5 +84,63 @@ namespace PMLecture.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetEmployee(string MaGiangVien)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new GiangVienContext().GetGiangVien(MaGiangVien);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult EditEmployee(GiangVienViewModel phongDaoTao)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new GiangVienContext().UpdateGiangVien(phongDaoTao);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
