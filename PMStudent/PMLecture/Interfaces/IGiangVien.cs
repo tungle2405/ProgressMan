@@ -13,7 +13,7 @@ namespace PMLecture.Interfaces
 
         CResponseMessage InsertNhanVien(GiangVienViewModel giangVien);
 
-        CResponseMessage UpdateGiangVien(GiangVienViewModel giangVien);
+        CResponseMessage UpdateNhanVien(GiangVienViewModel giangVien);
 
         CResponseMessage DeleteGiangVien(string maGiangVien);
     }

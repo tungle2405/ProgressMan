@@ -241,7 +241,7 @@ namespace PMLecture.Context
             }
         }
 
-        public CResponseMessage UpdateGiangVien(GiangVienViewModel giangVien)
+        public CResponseMessage UpdateNhanVien(GiangVienViewModel giangVien)
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
             IConfiguration config = builder.Build();
@@ -258,6 +258,9 @@ namespace PMLecture.Context
                 cmd.Parameters.AddWithValue("@HoTen", giangVien.HoTen);
                 cmd.Parameters.AddWithValue("@GioiTinh", giangVien.GioiTinh);
                 cmd.Parameters.AddWithValue("@TrinhDo", (object)giangVien.TrinhDo ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MaPhanQuyen", giangVien.MaPhanQuyen);
+                cmd.Parameters.AddWithValue("@ChuyenMon", (object)giangVien.ChuyenMon ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@MaDonVi", giangVien.MaDonVi);
 
                 cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 100);
                 cmd.Parameters["@Code"].Direction = ParameterDirection.Output;
@@ -284,6 +287,6 @@ namespace PMLecture.Context
             return new CResponseMessage();
         }
 
-
+        
     }
 }

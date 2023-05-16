@@ -326,7 +326,6 @@
     //Get Giảng Viên hoặc Nhân viên PĐT
     $('.nav_link-detail').on('click', function () {
         var idEmp = $(this)[0].id;
-        console.log(example);
 
         $.ajax({
             url: '@Url.Action("GetEmployee", "PhongDaoTao")',
@@ -350,8 +349,8 @@
                 $("#from_search").toggleClass("d-none");
                 document.getElementById('btn-add').textContent = "Quay lại";
 
-                $("#insertBTN").toggleClass("d-none");
-                $("#updateBTN").toggleClass("d-none");
+                $("#insertBTN").addClass("d-none");
+                $("#updateBTN").removeClass("d-none");
             },
             error: function (xhr) {
                 Swal.fire({
@@ -369,12 +368,14 @@
         var hoTen = document.getElementById("Name").value;
         var gioiTinh = $('input[name=inlineRadioOptions]:checked', '#form_add').val();
         var trinhDo = $('#trinhDo').find(":selected").val();
+        var phanQuyen = $('#phanQuyen').find(":selected").val();
 
         var employee = {
             MaGiangVien: maNhanVien,
             HoTen: hoTen,
             GioiTinh: gioiTinh,
-            TrinhDo: trinhDo
+            TrinhDo: trinhDo,
+            MaPhanQuyen: phanQuyen
         };
         var data = JSON.stringify(employee);
 

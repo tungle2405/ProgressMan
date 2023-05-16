@@ -8,8 +8,6 @@ const buttonClear = document.getElementById("lamMoi");
 button.addEventListener("click", function () {
     $("#form_add").toggleClass("d-none");
     $("#from_search").toggleClass("d-none");
-    $("#insertBTN").toggleClass("d-none");
-    $("#updateBTN").toggleClass("d-none");
     $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
 });
 
@@ -22,6 +20,7 @@ buttonClear.addEventListener("click", function () {
     $("input[type=radio][name=inlineRadioOptions]:first").prop('checked', true);
     $("#insertBTN").removeClass("d-none");
     $("#updateBTN").addClass("d-none");
+    $("#emailAddress").prop('disabled', false);
 });
 
 //Convert từ có dấu sang không dấu

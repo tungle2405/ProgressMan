@@ -122,7 +122,7 @@ namespace PMLecture.Controllers
             {
                 DBConnection.GetSqlConnection(connectionString); //Mở
 
-                var insertCheck = new GiangVienContext().UpdateGiangVien(phongDaoTao);
+                var insertCheck = new GiangVienContext().UpdateNhanVien(phongDaoTao);
                 var contents = JsonConvert.SerializeObject(insertCheck);
 
                 DBConnection.GetSqlConnection(connectionString); //Đóng
