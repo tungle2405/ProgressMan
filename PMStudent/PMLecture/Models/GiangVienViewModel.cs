@@ -22,5 +22,7 @@
 
         public string Email { get; set; }
 
+        public int HoatDong { get; set; }
+
     }
 }

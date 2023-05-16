@@ -56,7 +56,7 @@ namespace PMLecture.Controllers
             //return View();
         }
 
-        public ActionResult InsertEmployee(GiangVienViewModel phongDaoTao)
+        public ActionResult InsertEmployee(GiangVienViewModel giangVien)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
@@ -64,7 +64,7 @@ namespace PMLecture.Controllers
             {
                 DBConnection.GetSqlConnection(connectionString); //Mở
 
-                var insertCheck = new GiangVienContext().InsertNhanVien(phongDaoTao);
+                var insertCheck = new GiangVienContext().InsertNhanVien(giangVien);
                 var contents = JsonConvert.SerializeObject(insertCheck);
 
                 DBConnection.GetSqlConnection(connectionString); //Đóng
@@ -114,7 +114,7 @@ namespace PMLecture.Controllers
             }
         }
 
-        public ActionResult EditEmployee(GiangVienViewModel phongDaoTao)
+        public ActionResult EditEmployee(GiangVienViewModel giangVien)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
@@ -122,7 +122,36 @@ namespace PMLecture.Controllers
             {
                 DBConnection.GetSqlConnection(connectionString); //Mở
 
-                var insertCheck = new GiangVienContext().UpdateNhanVien(phongDaoTao);
+                var insertCheck = new GiangVienContext().UpdateNhanVien(giangVien);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult DeleteEmployee(string MaGiangVien)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new GiangVienContext().DeleteGiangVien(MaGiangVien);
                 var contents = JsonConvert.SerializeObject(insertCheck);
 
                 DBConnection.GetSqlConnection(connectionString); //Đóng

@@ -53,6 +53,7 @@
                                     <th>Email</th>
                                     <th>Trình độ</th>
                                     <th>Đơn vị</th>
+                                    <th>Trạng thái</th>
                                     <th>Sửa</th>
                                     <th>Xoá</th>
                                 </tr>
@@ -68,13 +69,20 @@
                                             <td>@nhanvien.Email</td>
                                             <td>@nhanvien.TrinhDo</td>
                                             <td>@nhanvien.TenDonVi</td>
+                                            @if(@nhanvien.HoatDong == 0){
+                                                <td style="color: green">Online</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Offline</td>
+                                            }
                                             <td>
                                                 <a href="#" class="nav_link nav_link-detail" id="@nhanvien.MaGiangVien">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="#" class="nav_link">
+                                                <a href="#" class="nav_link nav_link-delelte" id="@nhanvien.MaGiangVien">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
                                             </td>
@@ -425,5 +433,66 @@
             }
         });
 
+    })
+
+    //Xoá Giảng Viên
+    $('.nav_link-delete').on('click', function () {
+        var idEmp = $(this)[0].id;
+
+        Swal.fire({
+            title: 'Bạn có chắc muốn tắt hoạt động tài khoản này?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            denyButtonText: `Không`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("DeleteEmployee", "PhongDaoTao")',
+                    type: "POST",
+                    dataType: "json",
+                    //contentType: false,
+                    data: { MaGiangVien: idEmp },
+                    //async: true,
+                    //processData: false,
+                    //cache: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        $("#form_add").toggleClass("d-none");
+                        $("#from_search").toggleClass("d-none");
+                        $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                        var obj = JSON.parse(data);
+                        if (obj.Code == 0) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: obj.Message,
+                                timer: 1500
+                            });
+                            setTimeout(function () { window.location.href = "GiangVien/Index" }, 2000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: obj.Message,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                        })
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Không có sự thay đổi!', '', 'info')
+            }
+        })
     })
 </script>
