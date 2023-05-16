@@ -79,6 +79,7 @@ namespace PMLecture.Context
                     giangVien.MaDonVi = reader["MaDonVi"].ToString().Trim();
                     giangVien.TenDonVi = reader["TenDonVi"].ToString().Trim();
                     giangVien.Email = reader["TaiKhoan"].ToString().Trim();
+                    giangVien.HoatDong = Convert.ToInt32(reader["HoatDong"].ToString().Trim());
                     giangVienList.Add(giangVien);
                 }
 

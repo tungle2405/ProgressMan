@@ -82,7 +82,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="#" class="nav_link nav_link-delelte" id="@nhanvien.MaGiangVien">
+                                                <a href="#" class="nav_link nav_link-delete" id="@nhanvien.MaGiangVien">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
                                             </td>
@@ -460,9 +460,9 @@
                     success: function (data) {
                         var obj = JSON.parse(data);
 
-                        $("#form_add").toggleClass("d-none");
-                        $("#from_search").toggleClass("d-none");
-                        $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+                        //$("#form_add").toggleClass("d-none");
+                        //$("#from_search").toggleClass("d-none");
+                        //$(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
 
                         var obj = JSON.parse(data);
                         if (obj.Code == 0) {
@@ -472,7 +472,7 @@
                                 text: obj.Message,
                                 timer: 1500
                             });
-                            setTimeout(function () { window.location.href = "GiangVien/Index" }, 2000);
+                            setTimeout(function () { window.location.href = "PhongDaoTao/Index" }, 2000);
                         } else {
                             Swal.fire({
                                 icon: 'error',

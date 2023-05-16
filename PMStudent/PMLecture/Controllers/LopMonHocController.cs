@@ -37,7 +37,7 @@ namespace PMLecture.Controllers
                 //Lấy ra các môn học để insert
                 var listMonHoc = new MonHocContext().GetAllMonHoc();
                 //Lấy ra các giảng viên để insert
-                var listGiangVien = new GiangVienContext().GetAllGiangVien();
+                var listGiangVien = new GiangVienContext().GetAllGiangVien().Where(x => x.HoatDong == 0);
                 //Kiểm tra xem có phải ADMIN hay PDT thì lấy hết ra tất cả lớp môn học
                 //Còn nếu là Giảng Viên thì chỉ lấy ra mỗi giảng viên đó
                 if(session == "ADMIN" || HttpContext.Session.GetString("user").Substring(0, 3) == "PDT")
