@@ -13,5 +13,7 @@
         public int MaNganh { get; set; }
 
         public string Email { get; set; }
+
+        public int HoatDong { get; set; }
     }
 }

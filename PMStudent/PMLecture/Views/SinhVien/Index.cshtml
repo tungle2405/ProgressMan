@@ -55,6 +55,7 @@
                                     <th>Họ Tên</th>
                                     <th>Giới Tính</th>
                                     <th>Lớp Niên Chế</th>
+                                    <th>Trạng Thái</th>
                                     <th>Sửa</th>
                                     <th>Xoá</th>
                                 </tr>
@@ -62,19 +63,27 @@
                             <tbody>
                                 @if (Model != null && Model.Any())
                                 {
-                                    @foreach (var nhanvien in Model)
+                                    @foreach (var sinhvien in Model)
                                     {
                                         <tr>
-                                            <td>@nhanvien.HoTen</td>
-                                            <td>@nhanvien.GioiTinh</td>
-                                            <td>@nhanvien.LopNienChe</td>
+                                            <td>@sinhvien.HoTen</td>
+                                            <td>@sinhvien.GioiTinh</td>
+                                            <td>@sinhvien.LopNienChe</td>
+                                            @if (@sinhvien.HoatDong == 0)
+                                            {
+                                                <td style="color: green">Online</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Offline</td>
+                                            }
                                             <td>
-                                                <a href="#" class="nav_link nav_link-detail" id="@nhanvien.MaSinhVien">
+                                                <a href="#" class="nav_link nav_link-detail" id="@sinhvien.MaSinhVien">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="#" class="nav_link">
+                                                <a href="#" class="nav_link nav_link-delete" id="@sinhvien.MaSinhVien">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
                                             </td>
@@ -423,7 +432,7 @@
                         text: obj.Message,
                         timer: 1500
                     });
-                    setTimeout(function () { window.location.href = "SinhVien/Index" }, 2000);
+                    setTimeout(function () { window.location.href = "SinhVien/Index" }, 1000);
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -442,5 +451,66 @@
             }
         });
 
+    })
+
+    //Xoá Sinh Viên
+    $('.nav_link-delete').on('click', function () {
+        var idEmp = $(this)[0].id;
+
+        Swal.fire({
+            title: 'Bạn có chắc muốn tắt hoạt động tài khoản này?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            denyButtonText: `Không`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("DeleteSinhVien", "SinhVien")',
+                    type: "POST",
+                    dataType: "json",
+                    //contentType: false,
+                    data: { MaSinhVien: idEmp },
+                    //async: true,
+                    //processData: false,
+                    //cache: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        $("#form_add").toggleClass("d-none");
+                        $("#from_search").toggleClass("d-none");
+                        $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                        var obj = JSON.parse(data);
+                        if (obj.Code == 0) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: obj.Message,
+                                timer: 1500
+                            });
+                            setTimeout(function () { window.location.href = "GiangVien/Index" }, 2000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: obj.Message,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                        })
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Không có sự thay đổi!', '', 'info')
+            }
+        })
     })
 </script>
