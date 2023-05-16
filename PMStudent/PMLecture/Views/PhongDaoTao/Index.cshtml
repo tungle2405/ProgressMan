@@ -255,7 +255,7 @@
         });
     });
 
-    //Insert Giảng Viên hoặc Nhân viên PĐT
+    //Insert Nhân viên PĐT
     $('#submit').on('click', function () {
 
         var hoTen = document.getElementById("Name").value;
@@ -363,4 +363,64 @@
         });
     })
 
+    //Update Nhân Viên PĐT
+    $('#update').on('click', function () {
+        var maNhanVien = document.getElementById("MaGiangVien").value;
+        var hoTen = document.getElementById("Name").value;
+        var gioiTinh = $('input[name=inlineRadioOptions]:checked', '#form_add').val();
+        var trinhDo = $('#trinhDo').find(":selected").val();
+
+        var employee = {
+            MaGiangVien: maNhanVien,
+            HoTen: hoTen,
+            GioiTinh: gioiTinh,
+            TrinhDo: trinhDo
+        };
+        var data = JSON.stringify(employee);
+
+        $.ajax({
+            url: '@Url.Action("EditEmployee", "PhongDaoTao")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: employee,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#Name").val('');
+                $("#chuyenMon").val('');
+                $("#emailAddress").val('');
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
 </script>
