@@ -81,5 +81,63 @@ namespace PMLecture.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetSinhVien(string maSinhVien)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new SinhVienContext().GetSinhVien(maSinhVien);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult EditSinhVien(SinhVienViewModel sinhVien)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new SinhVienContext().UpdateSinhVien(sinhVien);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
