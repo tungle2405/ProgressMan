@@ -1,0 +1,431 @@
+﻿@model List<SinhVienViewModel>
+@{
+    ViewBag.Title = "LopMonHoc";
+    //var donvi = ViewBag.DonVi;
+    var listLopNienChe = ViewBag.LopNienChes;
+    var maLopMonHoc = ViewBag.MaLopMonHoc;
+    var arrayListLopNC = ViewBag.arrayListLopNC;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submit, #lamMoi,
+    #form_addEachStudent .ripple-surface,
+    #form_addByClass .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+<!--Select2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6 mx-auto">
+            <h4>
+                Thông tin các Sinh viên của lớp @maLopMonHoc
+            </h4>
+        </div>
+        <div class="col-lg-6 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary btn-add" id="btn-addByStudent">
+                Thêm mới từng sinh viên
+            </button>
+
+            <button type="button" class="btn btn-outline-primary btn-add" id="btn-addByClass">
+                Thêm mới sinh viên theo lớp niên chế
+            </button>
+
+            <button type="button" class="btn btn-outline-primary btn-back d-none" id="btn-addBack">
+                Quay lại
+            </button>
+
+            <button type="button" class="btn btn-outline-primary d-none" id="btn-add">
+                Smt
+            </button>
+        </div>
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã sinh viên</th>
+                                    <th>Họ Tên</th>
+                                    <th>Lớp Niên Chế</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Xoá</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var sinhvien in Model)
+                                    {
+                                        <tr>
+                                            <td>@sinhvien.MaSinhVien</td>
+                                            <td>@sinhvien.HoTen</td>
+                                            <td>@sinhvien.LopNienChe</td>
+                                            @if (@sinhvien.HoatDong == 0)
+                                            {
+                                                <td style="color: green">Online</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Offline</td>
+                                            }
+                                            <td>
+                                                <a href="#" class="nav_link nav_link-delete" id="@sinhvien.MaSinhVien">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu sinh viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="vh-100 gradient-custom d-none" id="form_addByClass">
+    <div class="container py-1 h-100">
+        <div class="row justify-content-center align-items-center h-auto">
+            <div class="col-12 col-lg-10 col-xl-10">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Thêm mới theo từng sinh viên</h4>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-12 col-12 mb-4">
+                                    <select class="select form-control form-control-md" id="LopNienChe">
+                                        <option value="" selected disabled>Lớp niên chế</option>
+                                        @foreach (var item in listLopNienChe)
+                                        {
+                                            <option value="@item.LopNienChe">@item.LopNienChe</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4 pt-2">
+
+                                <div class="col-6">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submitByClass" />
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="btn btn-secondary btn-sm" type="button" value="Làm mới" id="lamMoi" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="vh-100 gradient-custom d-none" id="form_addEachStudent">
+    <div class="container py-1 h-100">
+        <div class="row justify-content-center align-items-center h-auto">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h4 class="mb-2 pb-2 pb-md-0 mb-md-4">Thêm mới theo lớp niên chế</h4>
+                        <form>
+
+                            <div class="row">
+                                <div class="col-md-6 col-6 mb-4">
+                                    <select class="select form-control form-control-md" id="LopNienCheStudent">
+                                        <option value="" selected disabled>Lớp niên chế</option>
+                                        @*@foreach (var item in listLopNienChe)
+                                        {
+                                            <option value="@item.LopNienChe">@item.LopNienChe</option>
+                                        }*@
+                                    </select>
+                                </div>
+                                <div class="col-md-6 col-6 mb-4">
+                                    <select class="select form-control form-control-md" id="TenVaMSV">
+                                        <option value="" selected disabled>Tên - Mã sinh viên</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2 pt-2">
+
+                                <div class="col-6">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submitByStudent" />
+                                </div>
+
+                                <div class="col-6">
+                                    <input class="btn btn-secondary btn-sm" type="button" value="Làm mới" id="lamMoi" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+            });
+
+            $.ajax({
+                url: '@Url.Action("GetSinhVienHocLopMonHoc", "LopMonHoc")',
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    for(var i = 0; i < obj.length; i++){
+                        $('select#LopNienCheStudent').append('<option value="' + obj[i].LopNienChe + '">' + obj[i].LopNienChe + '</option>');
+                    }
+
+                    $('select#LopNienCheStudent').selectize({
+                        onChange: function (value) {
+                            $('select#TenVaMSV').selectize()[0].selectize.destroy()
+                            changeStudentByClass(value);
+                        }
+                    });
+
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                    })
+                }
+            });
+
+        });
+    });
+
+    const btnAddByClass = document.getElementById("btn-addByClass");
+    const btnAddByStudent = document.getElementById("btn-addByStudent");
+    const btnAddBack = document.getElementById("btn-addBack");
+    btnAddByClass.addEventListener("click", function () {
+        $("#form_addByClass").removeClass("d-none");
+        $("#from_search").addClass("d-none");
+        $("#form_addEachStudent").addClass("d-none");
+        $(".btn-add").addClass("d-none");
+        $(".btn-back").removeClass("d-none");
+    });
+
+    btnAddByStudent.addEventListener("click", function () {
+        $("#form_addByClass").addClass("d-none");
+        $("#from_search").addClass("d-none");
+        $("#form_addEachStudent").removeClass("d-none");
+        $(".btn-add").addClass("d-none");
+        $(".btn-back").removeClass("d-none");
+    });
+
+    btnAddBack.addEventListener("click", function () {
+        $("#form_addByClass").addClass("d-none");
+        $("#from_search").removeClass("d-none");
+        $("#form_addEachStudent").addClass("d-none");
+        $(".btn-add").removeClass("d-none");
+        $(".btn-back").addClass("d-none");
+    });
+
+    //Thêm mới sinh viên theo lớp
+    $('#submitByClass').on('click', function () {
+
+        var maLopMonHoc = '@maLopMonHoc';
+        var lopNienChe = $('#LopNienChe').find(":selected").val();
+
+        var classSubject = {
+            MaLopMH: maLopMonHoc,
+            LopNienChe: lopNienChe
+        };
+
+        var data = JSON.stringify(classSubject);
+
+        $.ajax({
+            url: '@Url.Action("InsertSinhVienHocLopMonHoc", "LopMonHoc")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: classSubject,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#TotalStudent").val('');
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
+
+    //Xoá Sinh viên trong lớp môn học hiện tại
+    $('.nav_link-delete').on('click', function () {
+        var maLopMonHoc = '@maLopMonHoc';
+        var idEmp = $(this)[0].id;
+
+        var studentInClass = {
+            MaLopMH: maLopMonHoc,
+            MaSinhVien: idEmp
+        };
+
+        Swal.fire({
+            title: 'Bạn có chắc muốn xoá sinh viên này khỏi lớp môn học @maLopMonHoc?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            denyButtonText: `Không`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("DeleteSinhVienHocLopMonHoc", "LopMonHoc")',
+                    type: "POST",
+                    dataType: "json",
+                    //contentType: false,
+                    data: studentInClass,
+                    //async: true,
+                    //processData: false,
+                    //cache: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        if (obj.Code == 0) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: obj.Message,
+                                timer: 1500
+                            });
+                            setTimeout(function () { window.location.href = "IndexSVHocLopMH?MaLopMonHoc=" + maLopMonHoc}, 1000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: obj.Message,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                        })
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Không có sự thay đổi!', '', 'info')
+            }
+        })
+    })
+
+    //$('.item').on("change", function() {
+    //    var studentClass = $(this)[0].dataset.value;
+
+    //    changeStudentByClass(studentClass);
+    //});
+
+    //Tự động lấy ra các sinh viên theo lớp đã chọn
+    function changeStudentByClass(classStd){
+        $.ajax({
+            url: '@Url.Action("GetSinhVienHocLopNienChe", "LopMonHoc")',
+            type: "GET",
+            async: false,
+            cache: false,
+            data: { LopNienChe: classStd },
+            dataType: "json",
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $('select#TenVaMSV').empty()
+
+                for (var i = 0; i < obj.length; i++) {
+                    $('select#TenVaMSV').append('<option value="' + obj[i].MaSinhVien + '">' + obj[i].HoTen + ' - ' + obj[i].MaSinhVien + '</option>');
+                }
+
+                $('select#TenVaMSV').selectize()[0].selectize.destroy();
+                $('select#TenVaMSV').selectize({
+                    options: obj,
+                    create: false
+                });
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+    }
+</script>

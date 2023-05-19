@@ -77,12 +77,12 @@
                                                     <td>@lopmonhoc.NamHoc</td>
                                                     <td>@lopmonhoc.SoSinhVien</td>
                                                     <td>
-                                                        <a href="#" class="nav_link">
+                                                        <a href="LopMonHoc/IndexSVHocLopMH?MaLopMonHoc=@lopmonhoc.MaLopMonHoc" class="nav_link nav_link-detail" id="@lopmonhoc.MaLopMonHoc">
                                                             <i class="bi bi-pencil-square"></i>
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <a href="#" class="nav_link">
+                                                        <a href="#" class="nav_link  nav_link-delete" id="@lopmonhoc.MaLopMonHoc">
                                                             <i class="bi bi-trash-fill"></i>
                                                         </a>
                                                     </td>
@@ -274,16 +274,6 @@
         });
 
     })
-
-    //Tự động chuyển từ họ tên sang email
-    //$('#emailAddress').click(function (event) {
-    //    var hoTen = document.getElementById("Name").value;
-    //    var words = hoTen.split(' ');
-    //    var ten = words.pop();
-    //    var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
-
-    //    $('#emailAddress').val(emailSplit);
-    //});
 
     //Tự động điền mới năm để phù hợp với từng giai đoạn
     $('#SchoolYear').each(function () {

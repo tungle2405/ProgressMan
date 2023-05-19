@@ -25,5 +25,7 @@
         public string NamHoc { get;set; }
 
         public string SoSinhVien { get; set; }
+
+        public List<SinhVienViewModel> SinhVien { get; set; }
     }
 }

@@ -69,9 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BUS\IGenerate.cs" />
     <Compile Include="BUS\IHashCode.cs" />
     <Compile Include="Common\DBConnection.cs" />
     <Compile Include="Common\Helper.cs" />
+    <Compile Include="DAL\Generate.cs" />
     <Compile Include="DAL\HashCode.cs" />
     <Compile Include="DTO\CResponseMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
