@@ -22,6 +22,7 @@ namespace PMLecture.Context
                     List<LopMonHocViewModel> lopMonHocList = new List<LopMonHocViewModel>();
                     var sqlcon = DBConnection.GetSqlConnection(connectionString);
                     SqlCommand cmd = new SqlCommand("GV_SP_GetAllLopMonHoc", sqlcon);
+                    cmd.Parameters.AddWithValue("@MaGiangVien", DBNull.Value);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     var reader = cmd.ExecuteReader();
@@ -90,6 +91,7 @@ namespace PMLecture.Context
                 throw ex;
             }
         }
+
         public LopMonHocViewModel GetLopMonHoc(string maLopMonHoc)
         {
             throw new NotImplementedException();
@@ -97,7 +99,50 @@ namespace PMLecture.Context
 
         public List<LopMonHocViewModel> GetLopMonHocTheoGiangVien(string maGiangVien)
         {
-            throw new NotImplementedException();
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
+            IConfiguration config = builder.Build();
+            string connectionString = config.GetValue<string>("ConnectionStrings:DefaultConnection");
+
+            try
+            {
+                if (maGiangVien != "ADMIN" && maGiangVien.Substring(0, 3) != "PDT")
+                {
+                    List<LopMonHocViewModel> lopMonHocList = new List<LopMonHocViewModel>();
+                    var sqlcon = DBConnection.GetSqlConnection(connectionString);
+                    SqlCommand cmd = new SqlCommand("GV_SP_GetAllLopMonHoc", sqlcon);
+                    cmd.Parameters.AddWithValue("@MaGiangVien", maGiangVien);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        LopMonHocViewModel lopMonHoc = new LopMonHocViewModel();
+                        lopMonHoc.MaLopMonHoc = reader["MaLopMonHoc"].ToString().Trim();
+                        lopMonHoc.TenLopMonHoc = reader["TenLopMonHoc"].ToString().Trim();
+                        lopMonHoc.MaGiangVien = reader["MaGiangVien"].ToString().Trim();
+                        lopMonHoc.TenGiangVien = reader["HoTen"].ToString().Trim();
+                        lopMonHoc.HocKy = reader["HocKy"].ToString().Trim();
+                        lopMonHoc.NamHoc = reader["NamHoc"].ToString().Trim();
+                        lopMonHoc.MaMonHoc = reader["MaMonHoc"].ToString().Trim();
+                        lopMonHoc.SoSinhVien = reader["SoSinhVien"].ToString().Trim();
+                        lopMonHoc.TongSoTiet = reader["TongSoTiet"].ToString().Trim();
+                        lopMonHoc.SoTietLyThuyet = reader["SoTietLyThuyet"].ToString().Trim();
+                        lopMonHoc.SoTietThucHanh = reader["SoTietThucHanh"].ToString().Trim();
+                        lopMonHocList.Add(lopMonHoc);
+                    }
+
+                    return lopMonHocList;
+                }
+                else
+                {
+                    return new List<LopMonHocViewModel>();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public List<string> GetMaLopMonHoc(string maLopMonHoc)
@@ -145,7 +190,7 @@ namespace PMLecture.Context
                 //luôn gán mã mới khi tạo thêm 1 lớp môn học mới
                 var listMH = GetMaLopMonHoc(lopMonHoc.MaMonHoc);
                 var lastElem = listMH.Count + 1;
-                var maLopMonHoc = lopMonHoc.MaMonHoc + "_" + lastElem.ToString(new string('0', 3));
+                var maLopMonHoc = lopMonHoc.MaMonHoc + "_" + lastElem.ToString(new string('0', 2));
 
                 //tên lớp môn học được gán bằng tên môn học - học kỳ - 2 số cuối của năm học
                 var getTenMonHoc = new MonHocContext().GetAllMonHoc().FirstOrDefault(x => x.MaMonHoc == lopMonHoc.MaMonHoc).TenMonHoc;
@@ -207,6 +252,44 @@ namespace PMLecture.Context
                 SqlCommand cmd = new SqlCommand("GV_SP_InsertSinhVienToLopMH", sqlcon);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@LopNienChe", lopNienChe);
+                cmd.Parameters.AddWithValue("@MaLopMonHoc", maLopMH);
+
+
+                cmd.Parameters.Add("@Code", SqlDbType.NVarChar, 100);
+                cmd.Parameters["@Code"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("@Message", SqlDbType.NVarChar, 100);
+                cmd.Parameters["@Message"].Direction = ParameterDirection.Output;
+                cmd.Parameters.Add("@Data", SqlDbType.NVarChar, 100);
+                cmd.Parameters["@Data"].Direction = ParameterDirection.Output;
+
+                var reader = cmd.ExecuteNonQuery();
+                resMess.Code = Convert.ToInt32(cmd.Parameters["@Code"].Value);
+                resMess.Message = Convert.ToString(cmd.Parameters["@Message"].Value);
+                resMess.Data = Convert.ToString(cmd.Parameters["@Data"].Value);
+
+                return resMess;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public CResponseMessage InsertMotSVHocLopMonHocp(string maSinhVien, string maLopMH)
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
+            IConfiguration config = builder.Build();
+            string connectionString = config.GetValue<string>("ConnectionStrings:DefaultConnection");
+
+            try
+            {
+                CResponseMessage resMess = new CResponseMessage();
+
+                var sqlcon = DBConnection.GetSqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("GV_SP_InsertMotSinhVienToLopMH", sqlcon);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaSinhVien", maSinhVien);
                 cmd.Parameters.AddWithValue("@MaLopMonHoc", maLopMH);
 
 

@@ -25,7 +25,7 @@
         top: 13px;
     }
 
-    #submit, #lamMoi,
+    #submitByClass, #lamMoi, #submitByStudent,
     #form_addEachStudent .ripple-surface,
     #form_addByClass .ripple-surface {
         width: 100%;
@@ -210,10 +210,6 @@
 <script>
     $(function () {
         $(document).ready(function () {
-            $('#example').DataTable({
-                order: [[1, 'desc']],
-            });
-
             $.ajax({
                 url: '@Url.Action("GetSinhVienHocLopMonHoc", "LopMonHoc")',
                 type: "GET",
@@ -221,7 +217,7 @@
                 success: function (data) {
                     var obj = JSON.parse(data);
 
-                    for(var i = 0; i < obj.length; i++){
+                    for (var i = 0; i < obj.length; i++) {
                         $('select#LopNienCheStudent').append('<option value="' + obj[i].LopNienChe + '">' + obj[i].LopNienChe + '</option>');
                     }
 
@@ -242,6 +238,9 @@
                 }
             });
 
+            $('#example').DataTable({
+                order: [[1, 'desc']]
+            });
         });
     });
 
@@ -390,11 +389,63 @@
         })
     })
 
-    //$('.item').on("change", function() {
-    //    var studentClass = $(this)[0].dataset.value;
+    //Thêm mới từng sinh viên
+    $('#submitByStudent').on('click', function () {
 
-    //    changeStudentByClass(studentClass);
-    //});
+        var maLopMonHoc = '@maLopMonHoc';
+        var maSinhVien = $('#TenVaMSV').find(":selected").val();
+
+        var classSubject = {
+            MaLopMH: maLopMonHoc,
+            MaSinhVien: maSinhVien
+        };
+
+        var data = JSON.stringify(classSubject);
+
+        $.ajax({
+            url: '@Url.Action("InsertMotSinhVienHocLopMonHoc", "LopMonHoc")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: classSubject,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#TotalStudent").val('');
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    //$("#form_add").toggleClass("d-none");
+                    //$("#from_search").toggleClass("d-none");
+                    //$(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                    setTimeout(function () { window.location.href = "IndexSVHocLopMH?MaLopMonHoc=" + maLopMonHoc}, 1000);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
 
     //Tự động lấy ra các sinh viên theo lớp đã chọn
     function changeStudentByClass(classStd){

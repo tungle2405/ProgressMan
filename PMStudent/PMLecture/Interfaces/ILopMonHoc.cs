@@ -22,6 +22,8 @@ namespace PMLecture.Interfaces
         //Sinh viên học lớp môn học
         CResponseMessage InsertSVHocLopMonHocTheoLop(string lopNienChe, string maLopMH);
 
+        CResponseMessage InsertMotSVHocLopMonHocp(string maSinhVien, string maLopMH);
+
         CResponseMessage DeleteSVHocLopMonHocTheoLop(string MaSinhVien, string MaLopMH);
     }
 }

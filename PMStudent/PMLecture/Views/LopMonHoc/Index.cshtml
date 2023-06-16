@@ -4,6 +4,8 @@
     //var donvi = ViewBag.DonVi;
     var listMonHoc = ViewBag.MonHocs;
     var listGiangVien = ViewBag.GiangViens;
+    var sessions = ViewBag.Session;
+    var pdt = sessions.Substring(0, 3);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -43,9 +45,12 @@
             </h4>
         </div>
         <div class="col-lg-6 mx-auto text-right">
-            <button type="button" class="btn btn-outline-primary" id="btn-add">
-                Thêm mới
-            </button>
+            @if (@sessions == "ADMIN" || @pdt == "PDT")
+            {
+                <button type="button" class="btn btn-outline-primary" id="btn-add">
+                    Thêm mới
+                </button>
+            }
         </div>
         <div class="col-lg-12 mx-auto" id="from_search">
             <div class="card rounded shadow border-0">
@@ -60,8 +65,11 @@
                                     <th>Học kỳ</th>
                                     <th>Năm học</th>
                                     <th>Tổng số sinh viên</th>
-                                    <th>Sửa</th>
-                                    <th>Xoá</th>
+                                    @if (@sessions == "ADMIN" || @pdt == "PDT")
+                                    {
+                                        <th>Sửa</th>
+                                        <th>Xoá</th>
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,16 +84,20 @@
                                                     <td>@lopmonhoc.HocKy</td>
                                                     <td>@lopmonhoc.NamHoc</td>
                                                     <td>@lopmonhoc.SoSinhVien</td>
-                                                    <td>
-                                                        <a href="LopMonHoc/IndexSVHocLopMH?MaLopMonHoc=@lopmonhoc.MaLopMonHoc" class="nav_link nav_link-detail" id="@lopmonhoc.MaLopMonHoc">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="nav_link  nav_link-delete" id="@lopmonhoc.MaLopMonHoc">
-                                                            <i class="bi bi-trash-fill"></i>
-                                                        </a>
-                                                    </td>
+
+                                                    @if(@sessions == "ADMIN" || @pdt == "PDT"){
+                                                        <td>
+                                                            <a href="LopMonHoc/IndexSVHocLopMH?MaLopMonHoc=@lopmonhoc.MaLopMonHoc" class="nav_link nav_link-detail" id="@lopmonhoc.MaLopMonHoc">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="nav_link  nav_link-delete" id="@lopmonhoc.MaLopMonHoc">
+                                                                <i class="bi bi-trash-fill"></i>
+                                                            </a>
+                                                        </td>
+                                                    }
+                                                    
                                                 </tr>
                                     }
                                 }

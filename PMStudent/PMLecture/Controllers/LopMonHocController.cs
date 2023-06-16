@@ -24,7 +24,7 @@ namespace PMLecture.Controllers
 
             try
             {
-                if (HttpContext.Session.GetString("user") == null || HttpContext.Session.GetString("user") != "ADMIN")
+                if (HttpContext.Session.GetString("user") == null)
                 {
                     return RedirectToAction("Index", "LoginGV");
                 }
@@ -57,6 +57,7 @@ namespace PMLecture.Controllers
                 ViewBag.AccInfo = accinfo;
                 ViewBag.MonHocs = listMonHoc;
                 ViewBag.GiangViens = listGiangVien;
+                ViewBag.Session = session;
                 ViewBag.Side = "LopMonHoc";
 
                 DBConnection.GetSqlConnection(connectionString); //đóng
@@ -108,7 +109,7 @@ namespace PMLecture.Controllers
 
             try
             {
-                if (HttpContext.Session.GetString("user") == null || HttpContext.Session.GetString("user") != "ADMIN")
+                if (HttpContext.Session.GetString("user") == null)
                 {
                     return RedirectToAction("Index", "LoginGV");
                 }
@@ -158,6 +159,35 @@ namespace PMLecture.Controllers
                 DBConnection.GetSqlConnection(connectionString); //Mở
 
                 var insertCheck = new LopMonHocContext().InsertSVHocLopMonHocTheoLop(LopNienChe, MaLopMH);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult InsertMotSinhVienHocLopMonHoc(string MaSinhVien, string MaLopMH)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new LopMonHocContext().InsertMotSVHocLopMonHocp(MaSinhVien, MaLopMH);
                 var contents = JsonConvert.SerializeObject(insertCheck);
 
                 DBConnection.GetSqlConnection(connectionString); //Đóng
