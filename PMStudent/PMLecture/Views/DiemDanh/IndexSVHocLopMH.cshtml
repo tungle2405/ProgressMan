@@ -1,0 +1,282 @@
+﻿@model List<SinhVienViewModel>
+@{
+    ViewBag.Title = "DiemDanh";
+    var accInfo = ViewBag.AccInfo;
+    //var listLopNienChe = ViewBag.LopNienChes;
+    var maLopMonHoc = ViewBag.MaLopMonHoc;
+    //var arrayListLopNC = ViewBag.arrayListLopNC;
+    var listCaHoc = ViewBag.CaHocInfos;
+    var listBuoiHoc = ViewBag.BuoiHocInfos;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submitByClass, #lamMoi, #submitByStudent,
+    #form_addEachStudent .ripple-surface,
+    #form_addByClass .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+<!--Select2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6">
+            <h4>
+                Điểm danh các Sinh viên của lớp @maLopMonHoc
+            </h4>
+        </div>
+        
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="row pt-4 ps-5 pe-5 pb-2">
+                    <div class="col-lg-4 col-sm-4">
+                        <label for="NgayDiemDanh">Ngày điểm danh</label>
+                        <input id="NgayDiemDanh" class="form-control" type="date" />
+                        <span id="NgayDiemDanhSelected"></span>
+                    </div>
+                    
+                    <div class="col-lg-4 col-sm-4">
+                        <label for="BuoiHoc">Buổi học</label>
+                        <select class="select form-control" id="BuoiHoc">
+                            <option value="" disabled selected> -- Chọn -- </option>
+                            @foreach(var x in listBuoiHoc)
+                            {
+                                <option value="@x.MaBuoiHoc">@x.BuoiHocSo</option>
+                            }
+                        </select>
+                        <span id="BuoiHocSelected"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-6">
+                        <label for="CaHoc">Ca học</label>
+                        <select class="select form-control" id="CaHoc">
+                            <option value="" disabled selected> -- Chọn -- </option>
+                            @foreach(var x in listCaHoc)
+                            {
+                                <option value="@x.MaCaHoc">@x.GioBD - @x.GioKT</option>
+                            }
+                        </select>
+                        <span id="CaHocSelected"></span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-5 pt-2 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã sinh viên</th>
+                                    <th>Họ Tên</th>
+                                    <th>Lớp Niên Chế</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Tình trạng</th>
+                                    @*<th>Số tiết vắng</th>
+                                    <th>Lý do</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var sinhvien in Model)
+                                    {
+                                        <tr data-id="@sinhvien.MaSinhVien">
+                                            <td>@sinhvien.MaSinhVien</td>
+                                            <td>@sinhvien.HoTen</td>
+                                            <td>@sinhvien.LopNienChe</td>
+                                            @if (@sinhvien.HoatDong == 0)
+                                            {
+                                                <td style="color: green">Online</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Offline</td>
+                                            }
+                                            <td>
+                                                <select class="select form-control form-control-md" id="TrangThaiDiHoc">
+                                                    <option value="" selected disabled>Tình trạng</option>
+                                                    <option value="1">Có mặt</option>
+                                                    <option value="0">Vắng</option>
+                                                </select>
+                                            </td>
+                                            @*<td>
+                                                <input type="text" id="SoTietVang" class="form-control form-control-md sotietvang" />
+                                            </td>
+                                            <td>
+                                                <input type="text" id="LyDo" class="form-control form-control-md lydo" />
+                                            </td>*@
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu sinh viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-4 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-submit">
+                Xác nhận
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+                "pageLength": 100,
+                paging: false
+            });
+
+            $.ajax({
+                url: '@Url.Action("GetSinhVienHocLopMonHoc", "LopMonHoc")',
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+
+                    for(var i = 0; i < obj.length; i++){
+                        $('select#LopNienCheStudent').append('<option value="' + obj[i].LopNienChe + '">' + obj[i].LopNienChe + '</option>');
+                    }
+
+                    $('select#LopNienCheStudent').selectize({
+                        onChange: function (value) {
+                            $('select#TenVaMSV').selectize()[0].selectize.destroy()
+                            changeStudentByClass(value);
+                        }
+                    });
+
+                },
+                error: function (xhr) {
+                    //Swal.fire({
+                    //    icon: 'error',
+                    //    title: 'Lỗi!',
+                    //    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                    //})
+                }
+            });
+
+        });
+
+        $('#btn-submit').on('click', function () {
+            var date = $('#NgayDiemDanh').val();
+            var buoiHoc = $('#BuoiHoc').find(":selected").val();
+            var caHoc = $('#CaHoc').find(":selected").val();
+            var maGiangVien = '@accInfo.MaGiangVien';
+            var maLopMonHoc = '@maLopMonHoc';
+            var maMonHoc = '@maLopMonHoc'.split("_")[0];
+            var diemDanhSV = [];
+
+            const table = document.querySelector("table tbody");
+            for (const row of table.rows) {
+                var nTrangThai = parseInt($(row).find('#TrangThaiDiHoc').find(":selected").val());
+                var trangThaiDH = new Boolean(nTrangThai);
+                for (const cell of row.cells) { 
+                    if(cell._DT_CellIndex.column == 0){
+                        const sinhVienDD = { MaSinhVien: cell.innerText, TrangThai: trangThaiDH };
+                        //console.log(cell.innerText + ' - ' + trangThaiDH);
+                        diemDanhSV.push(sinhVienDD); 
+                    }
+                }  
+            }
+
+            var diemDanhSubject = {
+                MaGiangVien: maGiangVien,
+                MaLopMonHoc: maLopMonHoc,
+                NgayDiemDanh: date,
+                MaBuoiHoc: buoiHoc,
+                MaCaHoc: caHoc,
+                MaMonHoc: maMonHoc,
+                sinhVienDiemDanhs: diemDanhSV
+            };
+
+            if (date == '' || diemDanhSV.MaSinhVien == 'Không có dữ liệu sinh viên') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Không có dữ liệu!',
+                    timer: 3000
+                })
+                return false;
+            }
+
+            $.ajax({
+                url: '@Url.Action("DiemDanhSinhVien", "DiemDanh")',
+                type: "POST",
+                data: diemDanhSubject,
+                dataType: "json",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.Code == 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: obj.Message,
+                            timer: 1500
+                        });
+                        setTimeout(function () { window.location.href = ""}, 1000);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: obj.Message,
+                            timer: 3000
+                        })
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                    })
+                }
+            });
+
+            console.log(diemDanhSubject);
+        })
+
+        
+    });
+
+    
+</script>

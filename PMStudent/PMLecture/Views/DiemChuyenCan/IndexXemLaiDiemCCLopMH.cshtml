@@ -1,0 +1,185 @@
+﻿@model List<XemLaiDDViewModel>
+@{
+    ViewBag.Title = "XemLaiDiemDanh";
+    var accInfo = ViewBag.AccInfo;
+    //var listLopNienChe = ViewBag.LopNienChes;
+    var maLopMonHoc = ViewBag.MaLopMonHoc;
+    //var arrayListLopNC = ViewBag.arrayListLopNC;
+    //var listCaHoc = ViewBag.CaHocInfos;
+    var listBuoiHoc = ViewBag.BuoiHocInfos;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submitByClass, #lamMoi, #submitByStudent,
+    #form_addEachStudent .ripple-surface,
+    #form_addByClass .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+@*<!--Select2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+*@
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/b-2.3.6/b-html5-2.3.6/datatables.min.css" rel="stylesheet" />
+<script defer src="https://cdn.datatables.net/v/dt/dt-1.13.4/b-2.3.6/b-html5-2.3.6/datatables.min.js"></script>
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6">
+            <h4>
+                Bảng điẻm chuyên cần lớp @maLopMonHoc
+            </h4>
+        </div>
+
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="row pt-4 ps-5 pe-5 pb-2">
+                    <button type="button" class="btn btn-outline-primary d-none" id="btn-add">
+                        Smt
+                    </button>
+
+                    <input class="btn btn-secondary btn-sm d-none" type="button" value="Làm mới" id="lamMoi" />
+
+                </div>
+
+                <div class="row pt-4 ps-5 pe-5 pb-2">
+                    <div class="col-lg-4 col-sm-4">
+                        <label for="BuoiHoc">Buổi học</label>
+                        <select class="select form-control" id="BuoiHoc">
+                            <option value="" disabled selected> -- Chọn -- </option>
+                            @foreach (var x in listBuoiHoc)
+                            {
+                                <option value="@x.MaBuoiHoc">@x.BuoiHocSo</option>
+                            }
+                        </select>
+                        <span id="BuoiHocSelected"></span>
+                    </div>
+                </div>
+
+                <div class="card-body p-5 pt-2 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã sinh viên</th>
+                                    <th>Họ Tên</th>
+                                    <th>Buổi học số</th>
+                                    <th>Ca học</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var diemdanh in Model)
+                                    {
+                                        <tr data-id="@diemdanh.MaSinhVien">
+                                            <td>@diemdanh.MaSinhVien</td>
+                                            <td>@diemdanh.TenSinhVien</td>
+                                            <td>@diemdanh.BuoiHocSo</td>
+                                            <td>@diemdanh.GioBatDau - @diemdanh.GioKetThuc</td>
+                                            @if (@diemdanh.TrangThai == false)
+                                            {
+                                                <td style="color: green">Có mặt</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Vắng</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu sinh viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/js/jszip.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            order: [[1, 'asc']],
+        });
+
+    });
+
+    $('select#BuoiHoc').on('change', function () {
+        //window.location.href = 'IndexXemLaiDiemCCLopMH?MaLopMonHoc=' + 'maLopMonHoc' + '&MaBuoiHoc=' + this.value;
+        changeTableByBuoiHoc(this.value)
+    });
+
+    function changeTableByBuoiHoc(buoiHoc){
+        $.ajax({
+            url: '@Url.Action("GetDiemDanhByBuoiHoc", "DiemChuyenCan")',
+            type: "GET",
+            async: false,
+            cache: false,
+            data: { MaLopMonHoc: '@maLopMonHoc' , MaBuoiHoc: buoiHoc },
+            dataType: "json",
+            success: function (data) {
+
+                window.location.href = 'IndexXemLaiDiemCCLopMH?MaLopMonHoc=' + '@maLopMonHoc' + '&MaBuoiHoc=' + buoiHoc;
+                console.log(obj);
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+    }
+
+    //function myFunction(item, index) {
+    //    arr[index] = item * 10;
+    //    $('#example').find('tbody').append('<tr data-id=' + item.MaSinhVien + '>' + 
+    //                                             '<td>' + item.TenSinhVien + '</td>' + 
+    //                                             '<td>' + item.BuoiHocSo + '</td>' +
+    //                                             '<td>' + item.GioBatDau + ' - ' + item.GioKetThuc + '</td>' + 
+    //                                             '<td>' + item.TenSinhVien + '</td>' +
+    //                                             '<td>' + item.TenSinhVien + '</td>' + 
+    //                                             '<td>' + item.TenSinhVien + '</td>' +
+    //                                       '</tr>');
+    //}
+</script>

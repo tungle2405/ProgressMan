@@ -12,7 +12,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PMStudent</title>
+    <title>@ViewData["Title"] - PMLecture</title>
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/PMStudent.styles.css" asp-append-version="true" />
@@ -53,9 +53,9 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="#" class="nav_logo"> 
+                <a href="Home" class="nav_logo"> 
                     <i class='bx bx-layer nav_logo-icon'></i> 
-                    <span class="nav_logo-name">BBBootstrap</span>
+                    <span class="nav_logo-name">Site Giảng Viên</span>
                 </a>
                 <div class="nav_list">
                     @*<a href="#" class="nav_link"> 
@@ -88,10 +88,33 @@
                             <span class="nav_name">Môn học</span>
                         </a>
                     }
-                    <a href="@Url.Action("Index", "LopMonHoc")" class="nav_link nav_link_sidebar" id="LopMonHoc">
-                        <i class='bx bx-folder nav_icon'></i>
-                        <span class="nav_name">Lớp môn học</span>
-                    </a>
+                    @if (Convert.ToString(data.MaPhanQuyen) == '0'.ToString() || Convert.ToString(data.MaPhanQuyen) == '1'.ToString())
+                    {
+                        <a href="@Url.Action("Index", "LopMonHoc")" class="nav_link nav_link_sidebar" id="LopMonHoc">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Lớp môn học</span>
+                        </a>
+                    }
+                    @if (Convert.ToString(data.MaPhanQuyen) == '2'.ToString())
+                    {
+                        <a href="@Url.Action("Index", "DiemDanh")" class="nav_link nav_link_sidebar" id="DiemDanh">
+                            <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                            <span class="nav_name">Điểm danh sinh viên</span>
+                        </a>
+
+                        <a href="@Url.Action("Index", "DiemChuyenCan")" class="nav_link nav_link_sidebar" id="DiemChuyenCan">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Điểm chuyên cần</span>
+                        </a>
+
+                        <a href="@Url.Action("IndexXemLaiDiemCC", "DiemChuyenCan")" class="nav_link nav_link_sidebar" id="XemLaiDiemCC">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Xem lại điểm CC</span>
+                        </a>
+                    }
+                    
+                    
+
                     @*<a href="#" class="nav_link"> 
                         <i class='bx bx-user nav_icon'></i> 
                         <span class="nav_name">Users</span> 
@@ -116,7 +139,7 @@
             </div> 
             <a href="@Url.Action("Logout", "LoginGV")" class="nav_link">
                 <i class='bx bx-log-out nav_icon'></i> 
-                <span class="nav_name">SignOut</span> 
+                <span class="nav_name">Thoát</span> 
             </a>
         </nav>
     </div>
