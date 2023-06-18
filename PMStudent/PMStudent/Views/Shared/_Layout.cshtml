@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using PMStudent.Models
+@{
+    ViewData["Title"] = "Home Page";
+    var data = ViewBag.AccInfo;
+    var side = ViewBag.Side;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,8 +13,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PMStudent</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/PMStudent.styles.css" asp-append-version="true" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -19,70 +25,96 @@
     <!-- SweetAlert-->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.all.min.js"></script>
+    <!--Bootstraps-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <!--SweetAlert-->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.2/dist/sweetalert2.all.min.js"></script>
+    <!--Icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <!--Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <!--Custom CSS-->
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/home-sidebar.css" rel="stylesheet" />
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Container wrapper -->
-        <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="https://mdbgo.com/">
-                <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="16" alt="MDB Logo" loading="lazy" style="margin-top: -1px;" />
-            </a>
-
-            <!-- Toggle button -->
-            <button class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarButtonsExample"
-                    aria-controls="navbarButtonsExample"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                <!-- Left links -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Login", "Index", "Login", null, new { @class = "nav-link" })
-                    </li>
-                </ul>
-                <!-- Left links -->
-
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-link px-3 me-2">
-                        @Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "" })
-                    </button>
-                </div>
-            </div>
-            <!-- Collapsible wrapper -->
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+        <div class="header_right">
+            <div class="header_info"> @data </div>
+            <div class="header_img"> @*<img src="https://i.imgur.com/hczKIze.jpg" alt="">*@ <img src="~/images/default-user-image.png" /> </div>
         </div>
-        <!-- Container wrapper -->
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a href="#" class="nav_logo"> 
+                    <i class='bx bx-layer nav_logo-icon'></i> 
+                    <span class="nav_logo-name">Site Sinh Viên</span>
+                </a>
+                <div class="nav_list">
+                    @*<a href="#" class="nav_link"> 
+                        <i class='bx bx-grid-alt nav_icon'></i> 
+                        <span class="nav_name">Dashboard</span> 
+                    </a>*@
 
+                    <a href="@Url.Action("Index", "DiemDanh")" class="nav_link nav_link_sidebar" id="DiemDanh">
+                        <i class='bx bx-bookmark nav_icon'></i>
+                        <span class="nav_name">Điểm danh sinh viên</span>
+                    </a>
+                    
+                    @*<a href="#" class="nav_link"> 
+                        <i class='bx bx-user nav_icon'></i> 
+                        <span class="nav_name">Users</span> 
+                    </a> 
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-message-square-detail nav_icon'></i> 
+                        <span class="nav_name">Messages</span> 
+                    </a> 
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-bookmark nav_icon'></i> 
+                        <span class="nav_name">Bookmark</span> 
+                    </a> 
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-folder nav_icon'></i> 
+                        <span class="nav_name">Files</span> 
+                    </a>
+                    <a href="#" class="nav_link"> 
+                        <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
+                        <span class="nav_name">Stats</span> 
+                    </a> *@
+                </div>
+            </div> 
+            <a href="@Url.Action("Logout", "LoginGV")" class="nav_link">
+                <i class='bx bx-log-out nav_icon'></i> 
+                <span class="nav_name">SignOut</span> 
+            </a>
+        </nav>
+    </div>
+    <!--Container Main start-->
+    <div class="height-100 bg-light">
+        @*<h4>Main Components</h4>*@
+        @RenderBody()
+    </div>
+    <!--Container Main end-->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/home-sidebar.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+        var element = document.getElementById("@side");
+        element.classList.add("active");
+    </script>
 </body>
 </html>
