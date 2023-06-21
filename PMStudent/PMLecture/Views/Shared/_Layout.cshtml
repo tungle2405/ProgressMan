@@ -102,19 +102,31 @@
                             <span class="nav_name">Điểm danh sinh viên</span>
                         </a>
 
-                        <a href="@Url.Action("Index", "DiemChuyenCan")" class="nav_link nav_link_sidebar" id="DiemChuyenCan">
-                            <i class='bx bx-folder nav_icon'></i>
-                            <span class="nav_name">Điểm chuyên cần</span>
-                        </a>
-
                         <a href="@Url.Action("IndexXemLaiDiemCC", "DiemChuyenCan")" class="nav_link nav_link_sidebar" id="XemLaiDiemCC">
                             <i class='bx bx-folder nav_icon'></i>
-                            <span class="nav_name">Xem lại điểm CC</span>
+                            <span class="nav_name">Danh sách điểm danh</span>
                         </a>
+
+                        <a href="@Url.Action("Index", "KiemTra")" class="nav_link nav_link_sidebar" id="KiemTra">
+                            <i class='bx bx-bar-chart-alt-2 nav_icon'></i>
+                            <span class="nav_name">Thêm diểm kiểm tra</span>
+                        </a>
+
+                        @*<a href="@Url.Action("Index", "DiemChuyenCan")" class="nav_link nav_link_sidebar" id="DiemChuyenCan">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Xem điểm chuyên cần</span>
+                        </a>*@
+
+                        <a href="@Url.Action("Index", "DiemQuaTrinh")" class="nav_link nav_link_sidebar" id="DiemQuaTrinh">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Xem điểm quá trình</span>
+                        </a>
+
+                        
+
+                        
                     }
                     
-                    
-
                     @*<a href="#" class="nav_link"> 
                         <i class='bx bx-user nav_icon'></i> 
                         <span class="nav_name">Users</span> 
@@ -134,7 +146,7 @@
                     <a href="#" class="nav_link"> 
                         <i class='bx bx-bar-chart-alt-2 nav_icon'></i> 
                         <span class="nav_name">Stats</span> 
-                    </a> *@
+                    </a>*@
                 </div>
             </div> 
             <a href="@Url.Action("Logout", "LoginGV")" class="nav_link">

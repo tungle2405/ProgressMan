@@ -1,0 +1,255 @@
+﻿@model List<SinhVienViewModel>
+@{
+    ViewBag.Title = "DiemDanh";
+    var accInfo = ViewBag.AccInfo;
+    //var listLopNienChe = ViewBag.LopNienChes;
+    var maLopMonHoc = ViewBag.MaLopMonHoc;
+    //var arrayListLopNC = ViewBag.arrayListLopNC;
+    //var listCaHoc = ViewBag.CaHocInfos;
+    //var listBuoiHoc = ViewBag.BuoiHocInfos;
+    var listBuoiKT = ViewBag.BuoiKiemTraInfos;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submitByClass, #lamMoi, #submitByStudent,
+    #form_addEachStudent .ripple-surface,
+    #form_addByClass .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+<!--Select2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6">
+            <h4>
+                Thêm điểm kiểm tra cho lớp @maLopMonHoc
+            </h4>
+        </div>
+
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="row pt-4 ps-5 pe-5 pb-2">
+                    @*<div class="col-lg-4 col-sm-4">
+                    <label for="NgayDiemDanh">Ngày điểm danh</label>
+                    <input id="NgayDiemDanh" class="form-control" type="date" />
+                    <span id="NgayDiemDanhSelected"></span>
+                    </div>*@
+
+                    <div class="col-lg-4 col-sm-4">
+                        <label for="BuoiKiemTra">Buổi kiểm tra</label>
+                        <select class="select form-control" id="BuoiKiemTra">
+                            <option value="" disabled selected> -- Chọn -- </option>
+                            @foreach (var x in listBuoiKT)
+                            {
+                                <option value="@x.MaBuoiHoc">@x.BuoiHocSo</option>
+                            }
+                        </select>
+                        <span id="BuoiKiemTraSelected"></span>
+                    </div>
+
+                    @*<div class="col-lg-4 col-sm-6">
+                    <label for="CaHoc">Ca học</label>
+                    <select class="select form-control" id="CaHoc">
+                    <option value="" disabled selected> -- Chọn -- </option>
+                    @foreach (var x in listCaHoc)
+                    {
+                    <option value="@x.MaCaHoc">@x.GioBD - @x.GioKT</option>
+                    }
+                    </select>
+                    <span id="CaHocSelected"></span>
+                    </div>*@
+                </div>
+
+                <div class="card-body p-5 pt-2 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã sinh viên</th>
+                                    <th>Họ Tên</th>
+                                    <th>Lớp Niên Chế</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Điểm kiếm tra</th>
+                                    @*<th>Số tiết vắng</th>
+                                    <th>Lý do</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var sinhvien in Model)
+                                    {
+                                        <tr data-id="@sinhvien.MaSinhVien">
+                                            <td>@sinhvien.MaSinhVien</td>
+                                            <td>@sinhvien.HoTen</td>
+                                            <td>@sinhvien.LopNienChe</td>
+                                            @if (@sinhvien.HoatDong == 0)
+                                            {
+                                                <td style="color: green">Online</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Offline</td>
+                                            }
+                                            <td>
+                                                <input type="text" id="DiemKT" class="form-control form-control-md diemkt" />
+                                            </td>
+                                            @*<td>
+                                            <input type="text" id="SoTietVang" class="form-control form-control-md sotietvang" />
+                                            </td>
+                                            <td>
+                                            <input type="text" id="LyDo" class="form-control form-control-md lydo" />
+                                            </td>*@
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu sinh viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 mt-4 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-submit">
+                Xác nhận
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+                "pageLength": 100,
+                paging: false
+            });
+
+        });
+
+        $('#btn-submit').on('click', function () {
+            var buoiKT = $('#BuoiKiemTra').find(":selected").val();
+            var maGiangVien = '@accInfo.MaGiangVien';
+            var maLopMonHoc = '@maLopMonHoc';
+            var diemKiemTraSV = [];
+
+            if (buoiKT == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Chưa chọn buổi kiểm tra!',
+                    timer: 3000
+                });
+                return false;
+            }
+
+            const table = document.querySelector("table tbody");
+            for (const row of table.rows) {
+                var diemKT = parseInt($(row).find('#DiemKT').val());
+
+                if (diemKT > 10 || diemKT < 0 || isNaN(diemKT)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Điểm không vượt được quá 10 và thấp hơn 0!',
+                        timer: 3000
+                    });
+                    return false;
+                }
+
+                for (const cell of row.cells) {
+                    if (cell._DT_CellIndex.column == 0) {
+                        const diemSinhVien = { MaSinhVien: cell.innerText, DiemKiemtra: diemKT};
+                        //console.log(cell.innerText + ' - ' + trangThaiDH);
+                        diemKiemTraSV.push(diemSinhVien);
+                    }
+                }
+            }
+
+            var diemKiemTraSubject = {
+                MaGiangVien: maGiangVien,
+                MaLopMonHoc: maLopMonHoc,
+                MaBuoiKiemTra: buoiKT,
+                sinhVienKiemTras: diemKiemTraSV
+            };
+
+            $.ajax({
+                url: '@Url.Action("ThemDiemKiemTra", "KiemTra")',
+                type: "POST",
+                data: diemKiemTraSubject,
+                dataType: "json",
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    if (obj.Code == 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công!',
+                            text: obj.Message,
+                            timer: 1500
+                        });
+                        setTimeout(function () { window.location.href = "/KiemTra" }, 3000);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: obj.Message,
+                            timer: 3000
+                        })
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                    })
+                }
+            });
+
+            console.log(diemDanhSubject);
+        })
+
+
+    });
+
+
+</script>

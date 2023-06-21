@@ -1,0 +1,111 @@
+﻿@model List<LopMonHocViewModel>
+@{
+    ViewBag.Title = "XemLaiDiemDanh";
+    //var donvi = ViewBag.DonVi;
+    var listMonHoc = ViewBag.MonHocs;
+    var listGiangVien = ViewBag.GiangViens;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submit, #lamMoi,
+    #form_add .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6">
+            <h4>
+                Điểm kiểm tra của các lớp
+            </h4>
+        </div>
+        @*<div class="col-lg-6 mx-auto text-right">
+            <button type="button" class="btn btn-outline-primary" id="btn-add">
+            Thêm mới
+            </button>
+        </div>*@
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã Lớp Môn Học</th>
+                                    <th>Tên Lớp Môn Học</th>
+                                    <th>Học kỳ</th>
+                                    <th>Năm học</th>
+                                    <th>Tổng số sinh viên</th>
+                                    <th>Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var lopmonhoc in Model)
+                                    {
+                                        <tr>
+                                            <td>@lopmonhoc.MaLopMonHoc</td>
+                                            <td>@lopmonhoc.TenLopMonHoc</td>
+                                            <td>@lopmonhoc.HocKy</td>
+                                            <td>@lopmonhoc.NamHoc</td>
+                                            <td>@lopmonhoc.SoSinhVien</td>
+                                            <td>
+                                                <a href="KiemTra/IndexThemDiemLMH?MaLopMonHoc=@lopmonhoc.MaLopMonHoc" class="nav_link nav_link-detail" id="@lopmonhoc.MaLopMonHoc">
+                                                    @*<i class="bi bi-check2-square"></i>*@ Chọn
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu giảng viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'asc']],
+            });
+        });
+    });
+</script>
