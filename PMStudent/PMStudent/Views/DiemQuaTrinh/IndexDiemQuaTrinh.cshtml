@@ -1,0 +1,175 @@
+﻿@model List<DiemQuaTrinhViewModel>
+@{
+    ViewBag.Title = "DiemDanh";
+    var accInfo = ViewBag.AccInfo;
+    //var listLopNienChe = ViewBag.LopNienChes;
+    //var maLopMonHoc = ViewBag.MaLopMonHoc;
+    //var arrayListLopNC = ViewBag.arrayListLopNC;
+    //var listCaHoc = ViewBag.CaHocInfos;
+    //var listBuoiHoc = ViewBag.BuoiHocInfos;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-responsive .row {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+    }
+
+    .card-registration .select-arrow {
+        top: 13px;
+    }
+
+    #submitByClass, #lamMoi, #submitByStudent,
+    #form_addEachStudent .ripple-surface,
+    #form_addByClass .ripple-surface {
+        width: 100%;
+        font-size: 18px;
+    }
+
+    #MaMH {
+        line-height: 2rem;
+    }
+</style>
+
+<!--Select2-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+<div class="container py-1">
+    <div class="row py-0">
+        <div class="col-lg-6">
+            <h4>
+                Điểm quá trình của bạn trong lớp môn học
+            </h4>
+        </div>
+
+        <div class="col-lg-12 mx-auto" id="from_search">
+            <div class="card rounded shadow border-0">
+                <div class="row pt-4 ps-5 pe-5 pb-2">
+                </div>
+
+                <div class="card-body p-5 pt-2 bg-white rounded">
+                    <div class="table-responsive">
+                        <table id="example" style="width:100%" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Lớp môn học</th>
+                                    <th>Giảng viên</th>
+                                    <th>Sinh viên</th>
+                                    <th>Số buổi có mặt</th>
+                                    <th>Số buổi vắng</th>
+                                    <th>Điểm kiểm tra lần 1</th>
+                                    <th>Điểm kiểm tra giữa kỳ</th>
+                                    <th>Điểm kiểm tra cuối kỳ</th>
+                                    <th>Điểm chuyên cần</th>
+                                    <th>Điểm quá trình</th>
+                                    <th>Tư cách thi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var sinhvien in Model)
+                                    {
+                                        <tr data-id="@sinhvien.MaSinhVien">
+                                            <td>@sinhvien.TenLopMonHoc</td>
+                                            <td>@sinhvien.TenGiangVien</td>
+                                            <td>@sinhvien.TenSinhVien</td>
+                                            <td>@sinhvien.SoBuoiCoMat</td>
+                                            <td>@sinhvien.SoBuoiVang</td>
+                                            <td>
+                                                @if (@sinhvien.DiemKiemTraBuoi1 != -1)
+                                                {
+                                                    @sinhvien.DiemKiemTraBuoi1
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@sinhvien.DiemKiemTraBuoi2 != -1)
+                                                {
+                                                    @sinhvien.DiemKiemTraBuoi2
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@sinhvien.DiemKiemTraBuoi3 != -1)
+                                                {
+                                                    @sinhvien.DiemKiemTraBuoi3
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>@sinhvien.DiemChuyenCan</td>
+                                            <td>
+                                                @if (@sinhvien.DiemQuaTrinh != -1)
+                                                {
+                                                    @sinhvien.DiemQuaTrinh
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            @if (@sinhvien.DiemChuyenCan >= 7 || @sinhvien.DiemQuaTrinh > 4.0)
+                                            {
+                                                <td style="color: green">Đủ điều kiện</td>
+                                            }
+                                            else
+                                            {
+                                                <td style="color: red ">Cấm thi</td>
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6">
+                                            <div>
+                                                Không có dữ liệu sinh viên
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(document).ready(function () {
+            $('#example').DataTable({
+                order: [[1, 'desc']],
+                "pageLength": 100,
+                paging: false
+            });
+
+        });
+
+    });
+
+
+</script>

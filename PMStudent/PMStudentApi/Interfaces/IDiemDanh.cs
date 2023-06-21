@@ -1,4 +1,5 @@
-﻿using PMStudentApi.Models;
+﻿using PMLecture.Models;
+using PMStudentApi.Models;
 
 namespace PMLecture.Interfaces
 {
@@ -6,7 +7,7 @@ namespace PMLecture.Interfaces
     {
         //List<CaHocViewModel> GetAllCaHoc();
 
-        //List<BuoiHocViewModel> GetAllBuoiHoc();
+        SinhVienViewModel GetThongTinSV(string maSinhVien);
 
         List<DiemDanhViewModel> GetAllDiemDanhByMaSinhVien(string maSinhVien, string maLopMonHoc);
 

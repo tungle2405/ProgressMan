@@ -23,6 +23,22 @@ namespace PMStudentApi.Controllers
             return View();
         }
 
+        [Route("api/getthongtinsv")]
+        [HttpPost]
+        public string GetAllDiemDanh([FromBody] string maSinhVien)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            //CResponeMessage cRespone = new CResponeMessage();
+            DBConnection.GetSqlConnection(connectionString); //Mở
+
+            var loginCheck = new DiemDanhApiContext().GetThongTinSV(maSinhVien);
+            var result = JsonConvert.SerializeObject(loginCheck);
+
+            DBConnection.GetSqlConnection(connectionString); //Đóng
+            return result;
+        }
+
         [Route("api/getlopmonhoc")]
         [HttpPost]
         public string GetLopMonHoc([FromBody] string maSinhVien)
