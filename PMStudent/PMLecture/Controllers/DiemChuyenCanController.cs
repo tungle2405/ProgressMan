@@ -203,7 +203,7 @@ namespace PMLecture.Controllers
                 ViewBag.BuoiHocInfos = buoiHocInfo;
                 ViewBag.AccInfo = accinfo;
                 ViewBag.MaLopMonHoc = MaLopMonHoc;
-                ViewBag.Side = "DiemChuyenCan";
+                ViewBag.Side = "XemLaiDiemCC";
 
                 DBConnection.GetSqlConnection(connectionString); //đóng
             }

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using CoreLib.Common;
 using CoreLib.DTO;
+using System;
 
 namespace PMLecture.Context
 {
@@ -243,14 +244,64 @@ namespace PMLecture.Context
                     DiemChuyenCanViewModel diemCC = new DiemChuyenCanViewModel();
                     diemCC.MaSinhVien = reader["MaSinhVien"].ToString().Trim();
                     diemCC.TenSinhVien = reader["HoTen"].ToString().Trim();
+                    diemCC.LopNienChe = reader["LopNienChe"].ToString().Trim();
                     diemCC.MaLopMonHoc = reader["MaLopMonHoc"].ToString().Trim();
                     diemCC.SoBuoiCoMat = Convert.ToInt32(reader["TongCoMat"]);
                     diemCC.SoBuoiVang = Convert.ToInt32(reader["TongVangMat"]);
-                    diemCC.DiemChuyenCan = (10 - diemCC.SoBuoiVang);
+                    diemCC.DiemChuyenCan = (10 - diemCC.SoBuoiVang) * 0.2;
                     diemChuyenCanList.Add(diemCC);
                 }
 
                 return diemChuyenCanList;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<DiemQuaTrinhViewModel> ListDiemQuaTrinh(string maLopMonHoc)
+        {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
+            IConfiguration config = builder.Build();
+            string connectionString = config.GetValue<string>("ConnectionStrings:DefaultConnection");
+
+            try
+            {
+                List<DiemQuaTrinhViewModel> diemQuaTrinhList = new List<DiemQuaTrinhViewModel>();
+                var sqlcon = DBConnection.GetSqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand("GV_SP_GetDiemQuaTrinh", sqlcon);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaLopMonHoc", maLopMonHoc);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    DiemQuaTrinhViewModel diemQT = new DiemQuaTrinhViewModel();
+                    diemQT.MaSinhVien = reader["MaSinhVien"].ToString().Trim();
+                    diemQT.TenSinhVien = reader["HoTen"].ToString().Trim();
+                    diemQT.LopNienChe = reader["LopNienChe"].ToString().Trim();
+                    diemQT.MaLopMonHoc = reader["MaLopMonHoc"].ToString().Trim();
+                    diemQT.SoBuoiCoMat = Convert.ToInt32(reader["TongCoMat"]);
+                    diemQT.SoBuoiVang = Convert.ToInt32(reader["TongVangMat"]);
+                    diemQT.DiemKiemTraBuoi1 = Convert.ToDouble(reader["BaiKiemTra1"] == DBNull.Value ? -1 : reader["BaiKiemTra1"]);
+                    diemQT.DiemKiemTraBuoi2 = Convert.ToDouble(reader["BaiKiemTra2"] == DBNull.Value ? -1 : reader["BaiKiemTra2"]);
+                    diemQT.DiemKiemTraBuoi3 = Convert.ToDouble(reader["BaiKiemTra3"] == DBNull.Value ? -1 : reader["BaiKiemTra3"]);
+                    diemQT.DiemChuyenCan = (10 - diemQT.SoBuoiVang);
+                    if(diemQT.DiemKiemTraBuoi1 == -1 || diemQT.DiemKiemTraBuoi2 == -1 || diemQT.DiemKiemTraBuoi3 == -1)
+                    {
+                        diemQT.DiemQuaTrinh = -1;
+                    }
+                    else
+                    {
+                        diemQT.DiemQuaTrinh = Math.Round((((diemQT.DiemKiemTraBuoi1 * 0.2) + (diemQT.DiemKiemTraBuoi2 * 0.4) + (diemQT.DiemKiemTraBuoi1 * 0.4)) * 0.8) + (diemQT.DiemChuyenCan * 0.2), 2);
+                    }
+                    diemQuaTrinhList.Add(diemQT);
+                }
+
+                return diemQuaTrinhList;
 
             }
             catch (Exception ex)
