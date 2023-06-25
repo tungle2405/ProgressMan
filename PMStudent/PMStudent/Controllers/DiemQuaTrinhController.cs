@@ -96,6 +96,17 @@ namespace PMStudent.Controllers
                 {
                     ViewBag.AccInfo = session;
                 }
+
+                DiemQuaTrinhViewModel trongSo = new DiemQuaTrinhViewModel();
+                if (diemQT != null)
+                {
+                    trongSo.TrongSoBaiKT1 = diemQT.TrongSoBaiKT1;
+                    trongSo.TrongSoBaiKT2 = diemQT.TrongSoBaiKT2;
+                    trongSo.TrongSoBaiKT3 = diemQT.TrongSoBaiKT3;
+                    trongSo.TrongSoDiemCC = diemQT.TrongSoDiemCC;
+                }
+
+                ViewBag.TrongSo = trongSo;
                 ViewBag.MaSinhVien = session;
                 ViewBag.Side = "DiemQuaTrinh";
 

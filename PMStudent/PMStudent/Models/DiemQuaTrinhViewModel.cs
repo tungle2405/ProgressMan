@@ -26,6 +26,16 @@
 
         public double DiemKiemTraBuoi3 { get; set; }
 
+        public int TrongSoBaiKT1 { get; set; }
+
+        public int TrongSoBaiKT2 { get; set; }
+
+        public int TrongSoBaiKT3 { get; set; }
+
+        public int TrongSoDiemCC { get; set; }
+
+        public double DiemTBC { get; set; }
+
         public double DiemQuaTrinh { get; set; }
     }
 }

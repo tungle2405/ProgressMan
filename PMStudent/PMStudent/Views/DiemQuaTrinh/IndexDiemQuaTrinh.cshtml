@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "DiemDanh";
     var accInfo = ViewBag.AccInfo;
+    var trongSo = ViewBag.TrongSo;
     //var listLopNienChe = ViewBag.LopNienChes;
     //var maLopMonHoc = ViewBag.MaLopMonHoc;
     //var arrayListLopNC = ViewBag.arrayListLopNC;
@@ -62,15 +63,15 @@
                         <table id="example" style="width:100%" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Lớp môn học</th>
+                                    <th>Mã sinh viên</th>
                                     <th>Giảng viên</th>
                                     <th>Sinh viên</th>
                                     <th>Số buổi có mặt</th>
                                     <th>Số buổi vắng</th>
-                                    <th>Điểm kiểm tra lần 1</th>
-                                    <th>Điểm kiểm tra giữa kỳ</th>
-                                    <th>Điểm kiểm tra cuối kỳ</th>
-                                    <th>Điểm chuyên cần</th>
+                                    <th>Điểm kiểm tra lần 1 (@trongSo.TrongSoBaiKT1%)</th>
+                                    <th>Điểm kiểm tra lần 2 (@trongSo.TrongSoBaiKT2%)</th>
+                                    <th>Điểm kiểm tra lần 3 (@trongSo.TrongSoBaiKT3%)</th>
+                                    <th>Điểm chuyên cần (@trongSo.TrongSoDiemCC%)</th>
                                     <th>Điểm quá trình</th>
                                     <th>Tư cách thi</th>
                                 </tr>
@@ -81,7 +82,7 @@
                                     @foreach (var sinhvien in Model)
                                     {
                                         <tr data-id="@sinhvien.MaSinhVien">
-                                            <td>@sinhvien.TenLopMonHoc</td>
+                                            <td>@sinhvien.MaSinhVien</td>
                                             <td>@sinhvien.TenGiangVien</td>
                                             <td>@sinhvien.TenSinhVien</td>
                                             <td>@sinhvien.SoBuoiCoMat</td>
@@ -127,7 +128,7 @@
 
                                                 }
                                             </td>
-                                            @if (@sinhvien.DiemChuyenCan >= 7 || @sinhvien.DiemQuaTrinh > 4.0)
+                                            @if (@sinhvien.DiemChuyenCan >= 7 || @sinhvien.DiemTBC >= 4.0)
                                             {
                                                 <td style="color: green">Đủ điều kiện</td>
                                             }

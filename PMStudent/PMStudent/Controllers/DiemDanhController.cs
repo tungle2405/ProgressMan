@@ -47,6 +47,7 @@ namespace PMStudent.Controllers
                     ViewBag.AccInfo = session;
                 }
 
+
                 ViewBag.MaSinhVien = session;
                 ViewBag.Side = "DiemDanh";
 
