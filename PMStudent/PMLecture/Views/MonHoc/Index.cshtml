@@ -23,7 +23,7 @@
         top: 13px;
     }
 
-    #submit, #lamMoi,
+    #submit, #lamMoi, #update,
     #form_add .ripple-surface {
         width: 100%;
         font-size: 18px;
@@ -57,8 +57,12 @@
                                     <th>Tổng số tiết</th>
                                     <th>Số tiết lý thuyết</th>
                                     <th>Số tiết thực hành</th>
+                                    <th>Trọng số bài KT 1 (%)</th>
+                                    <th>Trọng số bài KT 2 (%)</th>
+                                    <th>Trọng số bài KT 3 (%)</th>
+                                    <th>Trọng số điểm CC (%)</th>
                                     <th>Sửa</th>
-                                    <th>Xoá</th>
+                                    @*<th>Xoá</th>*@
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,23 +75,67 @@
                                             <td>@monhoc.TongSoTiet</td>
                                             <td>@monhoc.SoTietLyThuyet</td>
                                             <td>@monhoc.SoTietThucHanh</td>
+                                            @*<th>@monhoc.TrongSoBaiKT1</th>
+                                            <th>@monhoc.TrongSoBaiKT2</th>
+                                            <th>@monhoc.TrongSoBaiKT3</th>
+                                            <th>@monhoc.TrongSoDiemCC</th>*@
                                             <td>
-                                                <a href="#" class="nav_link">
+                                                @if (@monhoc.TrongSoBaiKT1 != -1)
+                                                {
+                                                    @monhoc.TrongSoBaiKT1
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@monhoc.TrongSoBaiKT2 != -1)
+                                                {
+                                                    @monhoc.TrongSoBaiKT2
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@monhoc.TrongSoBaiKT3 != -1)
+                                                {
+                                                    @monhoc.TrongSoBaiKT3
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@monhoc.TrongSoDiemCC != -1)
+                                                {
+                                                    @monhoc.TrongSoDiemCC
+                                                }
+                                                else
+                                                {
+
+                                                }
+                                            </td>
+                                            <td>
+                                                <a href="#" class="nav_link nav_link-detail" id="@monhoc.MaMonHoc">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                             </td>
-                                            <td>
+                                            @*<td>
                                                 <a href="#" class="nav_link">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
-                                            </td>
+                                            </td>*@
                                         </tr>
                                     }
                                 }
                                 else
                                 {
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="10">
                                             <div>
                                                 Không có dữ liệu giảng viên
                                             </div>
@@ -111,10 +159,21 @@
                     <div class="card-body p-4 p-md-5">
                         <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
                         <form>
+                            <div class="row d-none">
+                                <div class="col-md-12 mb-6">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="MaMonHoc" class="form-control form-control-lg" />
+                                        <label class="form-label" for="MaMonHoc">Mã môn học</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-12 col-12 mb-4">
                                     <select class="select form-control form-control-md" id="MaMH">
-                                        <option value="" selected disabled>Mã môn học</option>
+                                        <option value="" selected disabled>Khoa</option>
                                         @foreach (var item in listMonHoc)
                                         {
                                             <option value="@item.TenVietTat">@item.TenNganh</option>
@@ -166,14 +225,60 @@
                                     </div>
 
                                 </div>
-
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="TrongSoBaiKT1" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TrongSoBaiKT1">Trọng số bài kiểm tra 1 (%)</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="TrongSoBaiKT2" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TrongSoBaiKT2">Trọng số bài kiểm tra 2 (%)</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="TrongSoBaiKT3" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TrongSoBaiKT3">Trọng số bài kiểm tra 3 (%)</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-4 pb-1">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="TrongSoChuyenCan" class="form-control form-control-lg" />
+                                        <label class="form-label" for="TrongSoChuyenCan">Trọng số điểm chuyên cần (%)</label>
+                                    </div>
+
+                                </div>
+                            </div>
 
                             <div class="row mt-4 pt-2">
 
-                                <div class="col-6">
+                                <div class="col-6" id="insertBTN">
                                     <input class="btn btn-primary btn-sm" type="button" value="Submit" id="submit" />
+                                </div>
+
+                                <div class="col-6 d-none" id="updateBTN">
+                                    <input class="btn btn-primary btn-sm" type="button" value="Update" id="update" />
                                 </div>
 
                                 <div class="col-6">
@@ -198,6 +303,7 @@
         });
     });
 
+    //Thêm mới môn học
     $('#submit').on('click', function () {
 
         var maMonHoc = $('#MaMH').find(":selected").val();
@@ -205,13 +311,32 @@
         var tongSoTiet = document.getElementById("TotalLesson").value;
         var soTietLyThuyet = document.getElementById("TheoryClass").value;
         var soTietThucHanh = document.getElementById("PracticalClass").value;
+        var trongSoKT1 = document.getElementById("TrongSoBaiKT1").value;
+        var trongSoKT2 = document.getElementById("TrongSoBaiKT2").value;
+        var trongSoKT3 = document.getElementById("TrongSoBaiKT3").value;
+        var trongSoCC = document.getElementById("TrongSoChuyenCan").value;
+
+        if (parseInt(trongSoKT1) + parseInt(trongSoKT2) + parseInt(trongSoKT3) + parseInt(trongSoCC) > 50) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Tổng trọng số không vượt quá 50%',
+                timer: 3000
+            })
+            return false;
+        }
+
 
         var subject = {
             MaMonHoc: maMonHoc,
             TenMonHoc: tenMonHoc,
             TongSoTiet: tongSoTiet,
             SoTietLyThuyet: soTietLyThuyet,
-            SoTietThucHanh: soTietThucHanh
+            SoTietThucHanh: soTietThucHanh,
+            TrongSoBaiKT1: trongSoKT1,
+            TrongSoBaiKT2: trongSoKT2,
+            TrongSoBaiKT3: trongSoKT3,
+            TrongSoDiemCC: trongSoCC
         };
         var data = JSON.stringify(subject);
 
@@ -225,14 +350,14 @@
             //processData: false,
             //cache: false,
             success: function (data) {
-                $("#NameLesson").val('');
-                $("#TotalLesson").val('');
-                $("#TheoryClass").val('');
-                $("#PracticalClass").val('');
+                //$("#NameLesson").val('');
+                //$("#TotalLesson").val('');
+                //$("#TheoryClass").val('');
+                //$("#PracticalClass").val('');
 
-                $("#form_add").toggleClass("d-none");
-                $("#from_search").toggleClass("d-none");
-                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+                //$("#form_add").toggleClass("d-none");
+                //$("#from_search").toggleClass("d-none");
+                //$(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
 
                 var obj = JSON.parse(data);
                 if (obj.Code == 0) {
@@ -242,6 +367,7 @@
                         text: obj.Message,
                         timer: 1500
                     });
+                    setTimeout(function () { window.location.href = "MonHoc" }, 2000);
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -262,13 +388,132 @@
 
     })
 
-    //Tự động chuyển từ họ tên sang email
-    //$('#emailAddress').click(function (event) {
-    //    var hoTen = document.getElementById("Name").value;
-    //    var words = hoTen.split(' ');
-    //    var ten = words.pop();
-    //    var emailSplit = convertViToEn(ten.toLowerCase() + words.map(word => word.charAt(0)).join('').toLowerCase() + '@@tlu.edu.vn');
+    //Get thông tin môn học
+    $('.nav_link-detail').on('click', function () {
+        var idEmp = $(this)[0].id;
 
-    //    $('#emailAddress').val(emailSplit);
-    //});
+        $.ajax({
+            url: '@Url.Action("GetMonHoc", "MonHoc")',
+            type: "GET",
+            dataType: "json",
+            //contentType: false,
+            data: { MaMonHoc: idEmp },
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                var nganh = obj.MaMonHoc.replace(/[^a-zA-Z]+/g, '');
+
+                $("#MaMH").prop('disabled', true);
+
+                document.getElementById('MaMonHoc').value = idEmp;
+                $("#MaMH").val(nganh);
+                $("#NameLesson").val(obj.TenMonHoc);
+                $("#TotalLesson").val(obj.TongSoTiet);
+                $("#TheoryClass").val(obj.SoTietLyThuyet);
+                $("#PracticalClass").val(obj.SoTietThucHanh);
+                $("#TrongSoBaiKT1").val(obj.TrongSoBaiKT1 == -1 ? "" : obj.TrongSoBaiKT1);
+                $("#TrongSoBaiKT2").val(obj.TrongSoBaiKT2 == -1 ? "" : obj.TrongSoBaiKT2);
+                $("#TrongSoBaiKT3").val(obj.TrongSoBaiKT3 == -1 ? "" : obj.TrongSoBaiKT3);
+                $("#TrongSoChuyenCan").val(obj.TrongSoDiemCC == -1 ? "" : obj.TrongSoDiemCC);
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                document.getElementById('btn-add').textContent = "Quay lại";
+
+                $("#insertBTN").addClass("d-none");
+                $("#updateBTN").removeClass("d-none");
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+    })
+
+    //Update môn học
+    $('#update').on('click', function () {
+        var maMonHoc = document.getElementById("MaMonHoc").value;
+        var tenMonHoc = document.getElementById("NameLesson").value;
+        var tongSoTiet = document.getElementById("TotalLesson").value;
+        var soTietLyThuyet = document.getElementById("TheoryClass").value;
+        var soTietThucHanh = document.getElementById("PracticalClass").value;
+        var trongSoKT1 = document.getElementById("TrongSoBaiKT1").value;
+        var trongSoKT2 = document.getElementById("TrongSoBaiKT2").value;
+        var trongSoKT3 = document.getElementById("TrongSoBaiKT3").value;
+        var trongSoCC = document.getElementById("TrongSoChuyenCan").value;
+
+        if (parseInt(trongSoKT1) + parseInt(trongSoKT2) + parseInt(trongSoKT3) + parseInt(trongSoCC) > 50) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Tổng trọng số không vượt quá 50%',
+                timer: 3000
+            })
+            return false;
+        }
+
+        var classInfo = {
+            MaMonHoc: maMonHoc,
+            TenMonHoc: tenMonHoc,
+            TongSoTiet: tongSoTiet,
+            SoTietLyThuyet: soTietLyThuyet,
+            SoTietThucHanh: soTietThucHanh,
+            TrongSoBaiKT1: trongSoKT1,
+            TrongSoBaiKT2: trongSoKT2,
+            TrongSoBaiKT3: trongSoKT3,
+            TrongSoDiemCC: trongSoCC
+        };
+        var data = JSON.stringify(classInfo);
+
+        $.ajax({
+            url: '@Url.Action("EditMonHoc", "MonHoc")',
+            type: "POST",
+            dataType: "json",
+            //contentType: false,
+            data: classInfo,
+            //async: true,
+            //processData: false,
+            //cache: false,
+            success: function (data) {
+                $("#Name").val('');
+                $("#chuyenMon").val('');
+                $("#emailAddress").val('');
+
+                $("#form_add").toggleClass("d-none");
+                $("#from_search").toggleClass("d-none");
+                $(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                var obj = JSON.parse(data);
+                if (obj.Code == 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: obj.Message,
+                        timer: 1500
+                    });
+                    setTimeout(function () { window.location.href = "MonHoc" }, 2000);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: obj.Message,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                })
+            }
+        });
+
+    })
 </script>

@@ -73,8 +73,8 @@ namespace PMLecture.Controllers
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            List<SinhVienViewModel> sinhVienInfos = new List<SinhVienViewModel>();
-            List<DiemChuyenCanViewModel> diemCC = new List<DiemChuyenCanViewModel>();
+            //List<SinhVienViewModel> sinhVienInfos = new List<SinhVienViewModel>();
+            //List<DiemChuyenCanViewModel> diemCC = new List<DiemChuyenCanViewModel>();
             List<DiemQuaTrinhViewModel> diemQT = new List<DiemQuaTrinhViewModel>();
 
             try
@@ -92,13 +92,23 @@ namespace PMLecture.Controllers
                 var accinfo = new ThongTinTKContext().GetThongTin(session);
 
                 //Lấy ra tất cả sinh viên của lớp môn học
-                sinhVienInfos = new LopMonHocContext().GetAllSinhVienHocLopMonHoc(MaLopMonHoc);
+                //sinhVienInfos = new LopMonHocContext().GetAllSinhVienHocLopMonHoc(MaLopMonHoc);
 
                 //Lấy ra điểm của tất cả sinh viên trong lớp môn học
                 diemQT = new DiemDanhContext().ListDiemQuaTrinh(MaLopMonHoc);
 
+                DiemQuaTrinhViewModel trongSo = new DiemQuaTrinhViewModel();
+                if (diemQT.Count > 0)
+                {
+                    trongSo.TrongSoBaiKT1 = diemQT[0].TrongSoBaiKT1;
+                    trongSo.TrongSoBaiKT2 = diemQT[0].TrongSoBaiKT2;
+                    trongSo.TrongSoBaiKT3 = diemQT[0].TrongSoBaiKT3;
+                    trongSo.TrongSoDiemCC = diemQT[0].TrongSoDiemCC;
+                }
+
                 //ViewBag.DonVi = donviInfo;
                 ViewBag.AccInfo = accinfo;
+                ViewBag.TrongSo = trongSo;
                 //ViewBag.LopNienChes = listLopNienChe;
                 ViewBag.MaLopMonHoc = MaLopMonHoc;
                 //ViewBag.GiangViens = listGiangVien;

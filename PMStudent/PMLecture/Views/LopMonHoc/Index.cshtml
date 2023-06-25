@@ -67,7 +67,7 @@
                                     <th>Tổng số sinh viên</th>
                                     @if (@sessions == "ADMIN" || @pdt == "PDT")
                                     {
-                                        <th>Sửa</th>
+                                        <th>Thông tin</th>
                                         <th>Xoá</th>
                                     }
                                 </tr>
@@ -104,7 +104,7 @@
                                 else
                                 {
                                         <tr>
-                                            <td colspan="6">
+                                            <td colspan="10">
                                                 <div>
                                                     Không có dữ liệu giảng viên
                                                 </div>
@@ -126,7 +126,7 @@
             <div class="col-12 col-lg-9 col-xl-7">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5">Form Thêm mới</h4>
+                        <h4 class="mb-4 pb-2 pb-md-0 mb-md-5"></h4>
                         <form>
                             <div class="row">
                                 <div class="col-md-12 col-12 mb-4">
@@ -300,5 +300,66 @@
             else
                 $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
         }
+    })
+
+    //Xoá Lớp môn học
+    $('.nav_link-delete').on('click', function () {
+        var idEmp = $(this)[0].id;
+
+        Swal.fire({
+            title: 'Bạn có chắc muốn xoá lớp môn học này?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Đồng ý',
+            denyButtonText: `Không`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '@Url.Action("DeleteLopMonHoc", "LopMonHoc")',
+                    type: "POST",
+                    dataType: "json",
+                    //contentType: false,
+                    data: { MaLopMonHoc: idEmp },
+                    //async: true,
+                    //processData: false,
+                    //cache: false,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+
+                        //$("#form_add").toggleClass("d-none");
+                        //$("#from_search").toggleClass("d-none");
+                        //$(this)[0].innerText = ($(this)[0].innerText == "THÊM MỚI" ? "Quay lại" : "Thêm mới");
+
+                        //var obj = JSON.parse(data);
+                        if (obj.Code == 0) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: obj.Message,
+                                timer: 1500
+                            });
+                            setTimeout(function () { window.location.href = "LopMonHoc" }, 2000);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: obj.Message,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText,
+                        })
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire('Không có sự thay đổi!', '', 'info')
+            }
+        })
     })
 </script>

@@ -17,7 +17,7 @@ namespace PMLecture.Interfaces
 
         CResponseMessage UpdateLopMonHoc(LopMonHocViewModel lopMonHoc);
 
-        CResponseMessage DeleteLopMonHoc(LopMonHocViewModel lopMonHoc);
+        CResponseMessage DeleteLopMonHoc(string maLopMonHoc);
 
         //Sinh viên học lớp môn học
         CResponseMessage InsertSVHocLopMonHocTheoLop(string lopNienChe, string maLopMH);

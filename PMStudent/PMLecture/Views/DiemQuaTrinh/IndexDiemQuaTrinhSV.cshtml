@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "DiemDanh";
     var accInfo = ViewBag.AccInfo;
+    var trongSo = ViewBag.TrongSo;
     //var listLopNienChe = ViewBag.LopNienChes;
     var maLopMonHoc = ViewBag.MaLopMonHoc;
     //var arrayListLopNC = ViewBag.arrayListLopNC;
@@ -75,10 +76,10 @@
                                     <th>Họ Tên</th>
                                     <th>Số buổi có mặt</th>
                                     <th>Số buổi vắng</th>
-                                    <th>Điểm kiểm tra lần 1</th>
-                                    <th>Điểm kiểm tra giữa kỳ</th>
-                                    <th>Điểm kiểm tra cuối kỳ</th>
-                                    <th>Điểm chuyên cần</th>
+                                    <th>Điểm kiểm tra lần 1 (@trongSo.TrongSoBaiKT1%)</th>
+                                    <th>Điểm kiểm tra lần 2 (@trongSo.TrongSoBaiKT2%)</th>
+                                    <th>Điểm kiểm tra lần 3 (@trongSo.TrongSoBaiKT3%)</th>
+                                    <th>Điểm chuyên cần (@trongSo.TrongSoDiemCC%)</th>
                                     <th>Điểm quá trình</th>
                                     <th>Tư cách thi</th>
                                 </tr>
@@ -122,7 +123,7 @@
                                                                     
                                                 }
                                             </td>
-                                            @if (@sinhvien.DiemChuyenCan >= 7 || @sinhvien.DiemQuaTrinh > 4.0)
+                                            @if (@sinhvien.DiemChuyenCan >= 7 || @sinhvien.DiemTBC >= 4.0)
                                             {
                                                 <td style="color: green">Đủ điều kiện</td>
                                             }
@@ -136,7 +137,7 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="10">
                                             <div>
                                                 Không có dữ liệu sinh viên
                                             </div>

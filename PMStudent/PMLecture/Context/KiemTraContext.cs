@@ -103,6 +103,7 @@ namespace PMLecture.Context
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MaGiangVien", listKiemTra.MaGiangVien);
+                    cmd.Parameters.AddWithValue("@MaMonHoc", listKiemTra.MaMonHoc);
                     cmd.Parameters.AddWithValue("@MaLopMonHoc", listKiemTra.MaLopMonHoc);
                     cmd.Parameters.AddWithValue("@MaBuoiKiemTra", listKiemTra.MaBuoiKiemTra);
 

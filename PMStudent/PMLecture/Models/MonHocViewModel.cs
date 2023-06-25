@@ -13,5 +13,14 @@ namespace PMLecture.Models
         public string SoTietLyThuyet { get; set; }
 
         public string SoTietThucHanh { get; set; }
+
+        public int TrongSoBaiKT1 { get; set; }
+
+        public int TrongSoBaiKT2 { get; set; }
+
+        public int TrongSoBaiKT3 { get; set; }
+
+        public int TrongSoDiemCC { get; set; }
+
     }
 }

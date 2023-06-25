@@ -133,7 +133,7 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="10">
                                             <div>
                                                 Không có dữ liệu sinh viên
                                             </div>
@@ -170,6 +170,7 @@
             var buoiKT = $('#BuoiKiemTra').find(":selected").val();
             var maGiangVien = '@accInfo.MaGiangVien';
             var maLopMonHoc = '@maLopMonHoc';
+            var maMonHoc = '@maLopMonHoc'.split("_")[0];
             var diemKiemTraSV = [];
 
             if (buoiKT == "") {
@@ -207,6 +208,7 @@
 
             var diemKiemTraSubject = {
                 MaGiangVien: maGiangVien,
+                MaMonHoc: maMonHoc,
                 MaLopMonHoc: maLopMonHoc,
                 MaBuoiKiemTra: buoiKT,
                 sinhVienKiemTras: diemKiemTraSV

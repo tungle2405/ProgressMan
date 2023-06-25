@@ -289,15 +289,25 @@ namespace PMLecture.Context
                     diemQT.DiemKiemTraBuoi1 = Convert.ToDouble(reader["BaiKiemTra1"] == DBNull.Value ? -1 : reader["BaiKiemTra1"]);
                     diemQT.DiemKiemTraBuoi2 = Convert.ToDouble(reader["BaiKiemTra2"] == DBNull.Value ? -1 : reader["BaiKiemTra2"]);
                     diemQT.DiemKiemTraBuoi3 = Convert.ToDouble(reader["BaiKiemTra3"] == DBNull.Value ? -1 : reader["BaiKiemTra3"]);
+                    diemQT.TrongSoBaiKT1 = Convert.ToInt32(reader["TrongSoBaiKT1"] == DBNull.Value ? -1 : reader["TrongSoBaiKT1"]);
+                    diemQT.TrongSoBaiKT2 = Convert.ToInt32(reader["TrongSoBaiKT2"] == DBNull.Value ? -1 : reader["TrongSoBaiKT2"]);
+                    diemQT.TrongSoBaiKT3 = Convert.ToInt32(reader["TrongSoBaiKT3"] == DBNull.Value ? -1 : reader["TrongSoBaiKT3"]);
+                    diemQT.TrongSoDiemCC = Convert.ToInt32(reader["TrongSoDiemCC"] == DBNull.Value ? -1 : reader["TrongSoDiemCC"]);
                     diemQT.DiemChuyenCan = (10 - diemQT.SoBuoiVang);
-                    if(diemQT.DiemKiemTraBuoi1 == -1 || diemQT.DiemKiemTraBuoi2 == -1 || diemQT.DiemKiemTraBuoi3 == -1)
-                    {
-                        diemQT.DiemQuaTrinh = -1;
-                    }
-                    else
-                    {
-                        diemQT.DiemQuaTrinh = Math.Round((((diemQT.DiemKiemTraBuoi1 * 0.2) + (diemQT.DiemKiemTraBuoi2 * 0.4) + (diemQT.DiemKiemTraBuoi1 * 0.4)) * 0.8) + (diemQT.DiemChuyenCan * 0.2), 2);
-                    }
+
+                    var tongTrongSo = diemQT.TrongSoBaiKT1 + diemQT.TrongSoBaiKT2 + diemQT.TrongSoBaiKT3 + diemQT.TrongSoDiemCC;
+
+                    double[] listDiem = new double[] { diemQT.DiemKiemTraBuoi1, diemQT.DiemKiemTraBuoi2, diemQT.DiemKiemTraBuoi3 };
+                    diemQT.DiemTBC = listDiem.Where(c => c != -1).Average();
+                    //if (diemQT.DiemKiemTraBuoi1 == -1 || diemQT.DiemKiemTraBuoi2 == -1 || diemQT.DiemKiemTraBuoi3 == -1)
+                    //{
+                    //    diemQT.DiemQuaTrinh = -1;
+                    //}
+                    //else
+                    //{ 
+
+                    //}
+                    diemQT.DiemQuaTrinh = Math.Round(((diemQT.DiemKiemTraBuoi1 * diemQT.TrongSoBaiKT1) + (diemQT.DiemKiemTraBuoi2 * diemQT.TrongSoBaiKT2) + (diemQT.DiemKiemTraBuoi3 * diemQT.TrongSoBaiKT3) + (diemQT.DiemChuyenCan * diemQT.TrongSoDiemCC))/ tongTrongSo, 2);
                     diemQuaTrinhList.Add(diemQT);
                 }
 

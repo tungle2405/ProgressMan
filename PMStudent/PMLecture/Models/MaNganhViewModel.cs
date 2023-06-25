@@ -47,7 +47,6 @@ namespace PMLecture.Models
             listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Thể chất", TenVietTat = "TC" });
             listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Quân sự", TenVietTat = "GDQP" });
             listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Vật lý", TenVietTat = "PHYS" });
-            listMMH.Add(new MaNganhViewModel { MaNganh = 0, TenNganh = "Thể chất", TenVietTat = "TC" });
 
             return listMMH;
         }

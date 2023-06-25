@@ -281,6 +281,35 @@ namespace PMLecture.Controllers
             }
         }
 
+        public ActionResult DeleteLopMonHoc(string MaLopMonHoc)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                DBConnection.GetSqlConnection(connectionString); //Mở
+
+                var insertCheck = new LopMonHocContext().DeleteLopMonHoc(MaLopMonHoc);
+                var contents = JsonConvert.SerializeObject(insertCheck);
+
+                DBConnection.GetSqlConnection(connectionString); //Đóng
+
+                CResponseMessage crMess = new CResponseMessage();
+                crMess = JsonConvert.DeserializeObject<CResponseMessage>(contents);
+                if (crMess.Code == 0)
+                {
+                    return Json(contents);
+                }
+
+                return Json(contents);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ActionResult DeleteSinhVienHocLopMonHoc(string MaSinhVien, string MaLopMH)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");

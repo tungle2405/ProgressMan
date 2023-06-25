@@ -7,6 +7,8 @@
 
         public string MaGiangVien { get; set; }
 
+        public string MaMonHoc { get; set; }
+
         public string MaLopMonHoc { get; set; }
 
         public string MaBuoiKiemTra { get; set; }
